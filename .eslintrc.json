@@ -1,4 +1,18 @@
+// {
+//   "extends": ["next/core-web-vitals",
+//   "standard","plugin:tailwindcss/recommended","prettier", "prettier/standard"]
+// }
+
+
 {
-  "extends": ["next/core-web-vitals",
-  "standard","plugin:tailwindcss/recommended","prettier"]
+  "extends": [
+    "next/core-web-vitals",
+    "standard",
+    "plugin:tailwindcss/recommended",
+    "prettier"
+  ],
+  "plugins": [],
+  "rules": {
+    // Your rules here
+  }
 }
