@@ -5,8 +5,8 @@ import React from "react";
 import Filter from "../../../components/shared/Filter";
 import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/HomeFilters";
-import QuestionCard from "@/components/QuestionCard";
 import NoResult from "@/components/shared/NoResult";
+import QuestionsCard from "@/components/cards/QuestionsCard";
 
 // dummy data
 const questionData = [
@@ -20,11 +20,11 @@ const questionData = [
     author: {
       _id: "author1",
       name: "Mary Joe",
-      picture: "url_to_picture",
+      picture: "/assets/icons/avatar.svg",
     },
     upvotes: ["user1", "user2"],
     views: 100,
-    answers: 13,
+    answers: [],
     createdAt: new Date("2022-01-01"),
   },
   {
@@ -37,28 +37,28 @@ const questionData = [
     author: {
       _id: "author1",
       name: "Mary Joe",
-      picture: "url_to_picture",
+      picture: "/assets/icons/avatar.svg",
     },
     upvotes: ["user1", "user3"],
     views: 100,
-    answers: 13,
+    answers: [],
     createdAt: new Date("2022-02-15"),
   },
   {
-    _id: "3",
+    _id:' 3',
     title: "How find a Bug in my code",
     tags: [
-      { _id: "1", name: "Sql" },
-      { _id: "3", name: "Kotlin" },
+      { _id: '1', name: "Sql" },
+      { _id: '3', name: "Kotlin" },
     ],
     author: {
       _id: "author1",
       name: "Mary Joe",
-      picture: "url_to_picture",
+      picture: "/assets/icons/avatar.svg",
     },
     upvotes: ["user1", "user4"],
     views: 100,
-    answers: 13,
+    answers: [],
     createdAt: new Date("2022-03-20"),
   },
 ];
@@ -103,16 +103,16 @@ const Home = () => {
           // Loop over the questions array and render the QuestionCard component
 
           questionData.map((question) => (
-            <QuestionCard
-              // key={question._id}
-              // _id={question._id}
-              // title={question.title}
-              // tags={question.tags}
-              // author={question.author}
-              // upvotes={question.upvotes}
-              // views={question.views}
-              // answers={question.answers}
-              // createdAt={question.createdAt}
+            <QuestionsCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              upvotes={question.upvotes}
+              views={question.views}
+              answers={question.answers}
+              createdAt={question.createdAt}
             />
           ))
         ) : (
