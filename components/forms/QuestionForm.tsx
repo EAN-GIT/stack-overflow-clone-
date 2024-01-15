@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import React, { ReactEventHandler } from "react";
+import React, {  useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 // Import dotenv to load environment variables from a .env file
@@ -27,7 +27,12 @@ import { QuestionsSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 
+const type:any = "dit"
+
 const QuestionForm = () => {
+
+    //state to handle submit action
+    const [isSubmitting, setIsSubmitting ] = useState(false)
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -41,7 +46,19 @@ const QuestionForm = () => {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    setIsSubmitting(true)
+
+    try {
+        ///make async call
+
+        //contain all form data
+
+        //navigate back home
+    } catch (error) {
+        
+    }finally{
+
+    }
     console.log(values);
   }
 
@@ -214,6 +231,7 @@ const QuestionForm = () => {
                     </div>
                   )}
                 </>
+
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Add up to 3 tags to describe what your question is about. You
@@ -223,7 +241,21 @@ const QuestionForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+            {/* //button tosubmit/edit form  */}
+                <Button  type="submit" className="primary-gradient w-fit !text-light-900" disabled={isSubmitting}>
+                        {
+                            isSubmitting ? (
+                                <>
+                                {type === 'edit' ? "Editing...": "Posting..."}
+                                </>
+                            ):(
+                                
+                                <>
+                                {type === 'edit' ? "Edit Question": "Ask a Question"}
+                                </> 
+                            )
+                        }
+                </Button>
       </form>
     </Form>
   );
