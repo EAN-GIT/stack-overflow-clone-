@@ -1,9 +1,16 @@
+'use client'
+import QuestionForm from '@/components/forms/QuestionForm'
 import React from 'react'
 
-const AskQuestion = () => {
+const Page = () => {
   return (
-    <div>AskQuestion</div>
+    <div>
+      <h1 className='h1-bold text-dark100_light900'>Ask a Question</h1>
+      <div className='mt-9'>
+        <QuestionForm />
+      </div>
+    </div>
   )
 }
 
-export default AskQuestion
+export default Page
