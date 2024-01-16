@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import React, {  useState } from "react";
+import React, {  useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 // Import dotenv to load environment variables from a .env file
@@ -26,11 +26,21 @@ import { Input } from "@/components/ui/input";
 import { QuestionsSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
+import { createQuestion } from "@/lib/actions/question.action";
+import { title } from "process";
+import { usePathname, useRouter } from "next/navigation";
 
 const type:any = "dit"
 
-const QuestionForm = () => {
+interface Props{
+  mongoUserId:string
+}
 
+const QuestionForm = ({mongoUserId}:Props) => {
+
+    const editorRef = useRef(null);
+  const router = useRouter()
+  const pathname = usePathname()
     //state to handle submit action
     const [isSubmitting, setIsSubmitting ] = useState(false)
   // 1. Define your form.
@@ -44,16 +54,25 @@ const QuestionForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     // Do something with the form values.
     setIsSubmitting(true)
 
     try {
         ///make async call
 
-        //contain all form data
+        // contain all form data
+        await createQuestion({
+            title:  values.title,
+            content: values.explanation,
+            author: JSON.parse(mongoUserId),
+            tags:values.tags,
+            path:pathname
+
+        })
 
         //navigate back home
+        router.push('/')
     } catch (error) {
         
     }finally{
@@ -157,6 +176,13 @@ const QuestionForm = () => {
                 <Editor  //work on the styling darkmode and env====================================\\\\\\\\\\\\\
                   apiKey="ecnx6s6i8wporc6dj3jl8ermzcqpojvg9g6iei7jh34ymi3w"
                 //   {process.env.TINYMCE_EDITOR_API_KEY}
+
+                onInit={(evt,editor)=>{
+                    //@ts-ignore
+                    editorRef.current = editor
+                }}
+                onBlur={field.onBlur}
+                onEditorChange={(content)=> field.onChange(content)}
                   init={{
                     plugins:
                       "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
