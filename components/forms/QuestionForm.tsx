@@ -27,13 +27,20 @@ import { QuestionsSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
+import { title } from "process";
+import { usePathname, useRouter } from "next/navigation";
 
 const type:any = "dit"
 
-const QuestionForm = () => {
+interface Props{
+  mongoUserId:string
+}
+
+const QuestionForm = ({mongoUserId}:Props) => {
 
     const editorRef = useRef(null);
-
+  const router = useRouter()
+  const pathname = usePathname()
     //state to handle submit action
     const [isSubmitting, setIsSubmitting ] = useState(false)
   // 1. Define your form.
@@ -54,10 +61,18 @@ const QuestionForm = () => {
     try {
         ///make async call
 
-        //contain all form data
-        await createQuestion({})
+        // contain all form data
+        await createQuestion({
+            title:  values.title,
+            content: values.explanation,
+            author: JSON.parse(mongoUserId),
+            tags:values.tags,
+            path:pathname
+
+        })
 
         //navigate back home
+        router.push('/')
     } catch (error) {
         
     }finally{

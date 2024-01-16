@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    images: {
+      domains: ['example.com'],
+    },
+    // Other configurations
+  };
   
-    // serverActions:true,
-    // mdxRs:true,
-    // serverComponentsExternalPackages:['mongoose']
-}
-
-module.exports = nextConfig
+  module.exports = nextConfig;
+  

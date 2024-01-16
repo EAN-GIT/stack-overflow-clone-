@@ -17,7 +17,8 @@ export async function connectToDatabase(){
     }
 
     if(isConnected){
-       return console.log('Mongo_db is already connected')
+      console.log('Mongo_db is already connected')
+      return
     }
     try {
         // const databaseUrl = process.env.DATABASE_URL as string; // Assert that it's a string
