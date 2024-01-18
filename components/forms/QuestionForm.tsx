@@ -3,11 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import React, {  useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 // Import dotenv to load environment variables from a .env file
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 // Load environment variables
 dotenv.config();
@@ -30,19 +30,18 @@ import { createQuestion } from "@/lib/actions/question.action";
 import { title } from "process";
 import { usePathname, useRouter } from "next/navigation";
 
-const type:any = "dit"
+const type: any = "dit";
 
-interface Props{
-  mongoUserId:string
+interface Props {
+  mongoUserId: string;
 }
 
-const QuestionForm = ({mongoUserId}:Props) => {
-
-    const editorRef = useRef(null);
-  const router = useRouter()
-  const pathname = usePathname()
-    //state to handle submit action
-    const [isSubmitting, setIsSubmitting ] = useState(false)
+const QuestionForm = ({ mongoUserId }: Props) => {
+  const editorRef = useRef(null);
+  const router = useRouter();
+  const pathname = usePathname();
+  //state to handle submit action
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -54,82 +53,72 @@ const QuestionForm = ({mongoUserId}:Props) => {
   });
 
   // 2. Define a submit handler.
-   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     // Do something with the form values.
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
-        ///make async call
+      ///make async call
 
-        // contain all form data
-        await createQuestion({
-            title:  values.title,
-            content: values.explanation,
-            author: JSON.parse(mongoUserId),
-            tags:values.tags,
-            path:pathname
+      // contain all form data
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        author: JSON.parse(mongoUserId),
+        tags: values.tags,
+        path: pathname,
+      });
 
-        })
-
-        //navigate back home
-        router.push('/')
+      //navigate back home
+      router.push("/");
     } catch (error) {
-        
-    }finally{
-
+    } finally {
     }
     console.log(values);
   }
 
-//handle for tags on Enter press
- function handleInputKeyDown(e:React.KeyboardEvent<HTMLInputElement>,field:any){
+  //handle for tags on Enter press
+  function handleInputKeyDown(
+    e: React.KeyboardEvent<HTMLInputElement>,
+    field: any
+  ) {
+    if (e.key === "Enter" && field.name === "tags") {
+      e.preventDefault();
 
-    if(e.key === "Enter" && field.name === 'tags' ){
-        e.preventDefault();
-      
-      
-        //gettingthe input
-        const tagInput = e.target as HTMLInputElement;
-        const tagValue = tagInput.value.trim(); 
+      //gettingthe input
+      const tagInput = e.target as HTMLInputElement;
+      const tagValue = tagInput.value.trim();
 
-        if(tagValue !== ''){
-            if(tagValue.length > 15){
-
-             return form.setError('tags',{
-                type: "required",
-                message:"Tag must be less than 15 characters."
-             })   
-
-            }
-            //ensure we dont add duplicat tags
-
-            if(!field.value.includes(tagValue as never)){
-                form.setValue('tags',[...field.value,tagValue])
-                tagInput.value = ''
-                form.clearErrors('tags');
-            }else{
-                form.trigger();
-            }
+      if (tagValue !== "") {
+        if (tagValue.length > 15) {
+          return form.setError("tags", {
+            type: "required",
+            message: "Tag must be less than 15 characters.",
+          });
         }
+        //ensure we dont add duplicat tags
 
+        if (!field.value.includes(tagValue as never)) {
+          form.setValue("tags", [...field.value, tagValue]);
+          tagInput.value = "";
+          form.clearErrors("tags");
+        } else {
+          form.trigger();
+        }
+      }
     }
+  }
+
+  // delete tag functionality
+
+  function handleTagRemove(tag: string, field: any) {
+    const newTags = field.value.filter((t: string) => t !== tag);
+
+    form.setValue("tags", newTags);
+  }
 
 
-
-
-}
-
-
-    // delete tag functionality
-
-    function handleTagRemove(tag:string,field:any){
-
-        const newTags = field.value.filter((t:string)=> t !== tag)
-
-        form.setValue('tags', newTags)
-
-
-    }
+  console.log("API Key:", process.env.TINYMCE_EDITOR_API_KEY);
 
   return (
     <Form {...form}>
@@ -173,16 +162,15 @@ const QuestionForm = ({mongoUserId}:Props) => {
               </FormLabel>
               <FormControl className="mt-3.5  background-light900_dark300">
                 {/* add a Todo and editor comp ===TINY MCE*/}
-                <Editor  //work on the styling darkmode and env====================================\\\\\\\\\\\\\
-                  apiKey="ecnx6s6i8wporc6dj3jl8ermzcqpojvg9g6iei7jh34ymi3w"
-                //   {process.env.TINYMCE_EDITOR_API_KEY}
+                <Editor //Todo:work on the styling darkmode and env====================================\\\\\\\\\\\\\
+                  apiKey={process.env.TINYMCE_EDITOR_API_KEY}
 
-                onInit={(evt,editor)=>{
+                  onInit={(evt, editor) => {
                     //@ts-ignore
-                    editorRef.current = editor
-                }}
-                onBlur={field.onBlur}
-                onEditorChange={(content)=> field.onChange(content)}
+                    editorRef.current = editor;
+                  }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   init={{
                     plugins:
                       "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
@@ -195,13 +183,12 @@ const QuestionForm = ({mongoUserId}:Props) => {
                       { value: "Email", title: "Email" },
                     ],
 
-                    ai_request: (request:string, respondWith:any) =>
+                    ai_request: (request: string, respondWith: any) =>
                       respondWith.string(() =>
                         Promise.reject("See docs to implement AI Assistant")
                       ),
                   }}
                   initialValue=""
-                
                 />
                 {/* ); */}
               </FormControl>
@@ -214,7 +201,7 @@ const QuestionForm = ({mongoUserId}:Props) => {
           )}
         />
         {/* Tag field  */}
-      
+
         <FormField
           control={form.control}
           name="tags"
@@ -238,9 +225,7 @@ const QuestionForm = ({mongoUserId}:Props) => {
                         <Badge
                           key={tag}
                           className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
-                          onClick={() =>
-                               handleTagRemove(tag, field)
-                          }
+                          onClick={() => handleTagRemove(tag, field)}
                         >
                           {tag}
                           {
@@ -257,7 +242,6 @@ const QuestionForm = ({mongoUserId}:Props) => {
                     </div>
                   )}
                 </>
-
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Add up to 3 tags to describe what your question is about. You
@@ -267,21 +251,18 @@ const QuestionForm = ({mongoUserId}:Props) => {
             </FormItem>
           )}
         />
-            {/* //button tosubmit/edit form  */}
-                <Button  type="submit" className="primary-gradient w-fit !text-light-900" disabled={isSubmitting}>
-                        {
-                            isSubmitting ? (
-                                <>
-                                {type === 'edit' ? "Editing...": "Posting..."}
-                                </>
-                            ):(
-                                
-                                <>
-                                {type === 'edit' ? "Edit Question": "Ask a Question"}
-                                </> 
-                            )
-                        }
-                </Button>
+        {/* //button tosubmit/edit form  */}
+        <Button
+          type="submit"
+          className="primary-gradient w-fit !text-light-900"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <>{type === "edit" ? "Editing..." : "Posting..."}</>
+          ) : (
+            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+          )}
+        </Button>
       </form>
     </Form>
   );
