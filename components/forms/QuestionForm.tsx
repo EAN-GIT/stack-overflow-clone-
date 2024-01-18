@@ -9,9 +9,6 @@ import { Editor } from "@tinymce/tinymce-react";
 // Import dotenv to load environment variables from a .env file
 import dotenv from "dotenv";
 
-// Load environment variables
-dotenv.config();
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -29,6 +26,9 @@ import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
 
+// Load environment variables
+dotenv.config();
+
 const type: any = "dit";
 
 interface Props {
@@ -39,7 +39,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
-  //state to handle submit action
+  // state to handle submit action
   const [isSubmitting, setIsSubmitting] = useState(false);
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
@@ -57,7 +57,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
     setIsSubmitting(true);
 
     try {
-      /// make async call
+      // make async call
 
       // contain all form data
       await createQuestion({
@@ -68,7 +68,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
         path: pathname,
       });
 
-      //navigate back home
+      // navigate back home
       router.push("/");
     } catch (error) {
     } finally {
@@ -76,7 +76,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
     // console.log(values);
   }
 
-  //handle for tags on Enter press
+  // handle for tags on Enter press
   function handleInputKeyDown(
     e: React.KeyboardEvent<HTMLInputElement>,
     field: any
@@ -124,7 +124,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-10 "
       >
-        {/* //question title field  */}
+        {/* // question title field  */}
         <FormField
           control={form.control}
           name="title"
@@ -135,11 +135,11 @@ const QuestionForm = ({ mongoUserId }: Props) => {
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Input
-                  className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px border"
+                  className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                   {...field}
                 />
               </FormControl>
-              <FormDescription className="body-regulat mt-2.5 text-light-500">
+              <FormDescription className="body-regular mt-2.5 text-light-500">
                 Be specific and imagine you&apos;re asking a question to another
                 person.
               </FormDescription>
@@ -158,12 +158,13 @@ const QuestionForm = ({ mongoUserId }: Props) => {
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl className="mt-3.5  background-light900_dark300">
+              <FormControl className="mt-3.5 background-light900 dark:bg-dark-300">
                 {/* add a Todo and editor comp ===TINY MCE*/}
-                <Editor // Todo:work on the styling darkmode and env====================================\\\\\\\\\\\\\
+                <Editor
+                  // Todo: work on the styling darkmode and env
                   apiKey={process.env.TINYMCE_EDITOR_API_KEY}
                   onInit={(evt, editor) => {
-                    //@ts-ignore
+                    // @ts-ignore
                     editorRef.current = editor;
                   }}
                   onBlur={field.onBlur}

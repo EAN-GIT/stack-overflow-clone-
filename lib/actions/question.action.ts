@@ -11,11 +11,11 @@ import { revalidatePath } from "next/cache";
 
 export async function getQuestions(params:GetQuestionsParams){
 
+  connectToDatabase()
     try {
-        connectToDatabase()
 
         // get all questions
-        const questions =await Question.find({})
+        const questions = await Question.find({})
         .populate({path: 'tags',model:Tag})
         .populate({path: 'author',model:User})
         .sort({createdAt : -1})
