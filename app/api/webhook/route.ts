@@ -51,21 +51,20 @@ export async function POST(req: Request) {
   }
  
   // Get the ID and type
-  const { id } = evt.data;
   const eventType = evt.type;
  
   if(eventType === "user.created"){
 
-    //get data from the event
+    // get data from the event
     const { id,email_addresses,image_url,username,first_name,last_name} = evt.data
 
 
 // Assuming that evt.data.username is of type 'string | null'
-const safeUsername: string = username ?? ""; // Use an empty string as a default if it's null
+// const safeUsername: string = username ?? ""; // Use an empty string as a default if it's null
 
 
 // username:safeUsername,
-    //trigger a server action to handle evnt
+    // trigger a server action to handle evnt
     const mongoUser = await createUser({
         clerkId: id,
         name: `${first_name} ${last_name ? `${last_name}` : ""}`, // Combining first and last names
@@ -81,7 +80,7 @@ const safeUsername: string = username ?? ""; // Use an empty string as a default
   
   if(eventType === "user.updated"){
 
-    //get data from the event
+    // get data from the event
     const { id,email_addresses,image_url,username,first_name,last_name} = evt.data
 
 
