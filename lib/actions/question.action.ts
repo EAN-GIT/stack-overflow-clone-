@@ -8,26 +8,16 @@ import User from "@/models/user.model";
 import { revalidatePath } from "next/cache";
 
 
+export async function getQuestions(params: GetQuestionsParams) {
+  connectToDatabase();
 
-export async function getQuestions(params:GetQuestionsParams){
+  // get all questions
+  const questions = await Question.find({})
+    .populate({ path: 'tags', model: Tag })
+    .populate({ path: 'author', model: User })
+    .sort({ createdAt: -1 });
 
-  connectToDatabase()
-    try {
-
-        // get all questions
-        const questions = await Question.find({})
-        .populate({path: 'tags',model:Tag})
-        .populate({path: 'author',model:User})
-        .sort({createdAt : -1})
-        
-
-
-
-        return {questions}
-    } catch (error) {
-        // console.log(error)
-        throw error
-    }
+  return { questions };
 }
 
 
