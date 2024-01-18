@@ -85,7 +85,7 @@ export async function POST(req: Request) {
 
 
 // Assuming that evt.data.username is of type 'string | null'
-const safeUsername: string = username ?? ""; // Use an empty string as a default if it's null
+// Use an empty string as a default if it's null
 
 
     const mongoUser = await updateUser({

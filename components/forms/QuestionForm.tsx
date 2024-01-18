@@ -72,6 +72,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
       router.push("/");
     } catch (error) {
     } finally {
+      setIsSubmitting(false);
     }
     // console.log(values);
   }
@@ -154,11 +155,12 @@ const QuestionForm = ({ mongoUserId }: Props) => {
           name="explanation"
           render={({ field }) => (
             <FormItem className="flex w-full gap-3 flex-col">
-              <FormLabel className="paragraph-semibold text-dark400_light800 ">
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl className="mt-3.5 background-light900 dark:bg-dark-300">
+              <FormControl className="mt-3.5">
+
                 {/* add a Todo and editor comp ===TINY MCE*/}
                 <Editor
                   // Todo: work on the styling darkmode and env
@@ -183,14 +185,14 @@ const QuestionForm = ({ mongoUserId }: Props) => {
 
                     ai_request: (request: string, respondWith: any) =>
                       respondWith.string(() =>
-                        Promise.reject("See docs to implement AI Assistant")
+                      Promise.reject(new Error("See docs to implement AI Assistant"))
                       ),
                   }}
                   initialValue=""
                 />
                 {/* ); */}
               </FormControl>
-              <FormDescription className="body-regulat mt-2.5 text-light-500">
+              <FormDescription className="body-regular mt-2.5 text-light-500">
                 Introduce the problem and expand on what you put in the titles.
                 Minumum 20 characters
               </FormDescription>
