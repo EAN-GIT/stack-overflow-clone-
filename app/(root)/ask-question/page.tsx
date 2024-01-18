@@ -9,7 +9,6 @@ const Page = async () => {
 
   const mongoUser = await getUserId({userId});
 
-     console.log(mongoUser)
 
   return (
     <div>
