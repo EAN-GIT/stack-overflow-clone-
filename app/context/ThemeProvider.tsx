@@ -1,7 +1,7 @@
 'use client'
 
 
-import React , {createContext,useEffect,useState,useContext, ReactNode} from "react"
+import React , {createContext,useEffect,useState,useContext} from "react"
 
 
 interface ThemeContextType {
@@ -30,7 +30,7 @@ export function ThemeProvider({children}:{children:React.ReactNode}){
     window.matchMedia(("prefers-color-scheme:dark")).matches)){
         
         setMode("dark")
-        //add class to the page
+        // add class to the page
         document.documentElement.classList.add("dark")
     }else{
         setMode("light")

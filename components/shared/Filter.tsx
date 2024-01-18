@@ -1,13 +1,6 @@
 'use client'
 import React from "react";
 
-interface Props{
-    filters:{name:string, value:string}[]
-    otherClasses?: string;
-    containerClasses?: string;
-    placeholder?: string;
-}
-
 
 import {
   Select,
@@ -18,6 +11,13 @@ import {
 } from "@/components/ui/select";
 
 import { SelectGroup } from "@radix-ui/react-select";
+
+interface Props{
+    filters:{name:string, value:string}[]
+    otherClasses?: string;
+    containerClasses?: string;
+    placeholder?: string;
+}
 
 const Filter = ({filters,otherClasses,containerClasses,placeholder}:Props) => {
   return (

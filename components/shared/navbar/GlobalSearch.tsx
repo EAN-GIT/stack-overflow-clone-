@@ -8,7 +8,7 @@ const GlobalSearch = () => {
       <div className="background-light800_darkgradient relative flex min-h-[56px] grow items-center gap-1 rounded-xl px-4">
         <Image
           src="/assets/icons/search.svg"
-          alt="seacrhIcon"
+          alt="Search Icon"
           width={24}
           height={24}
           className="cursor-pointer"
@@ -17,6 +17,7 @@ const GlobalSearch = () => {
           type="text"
           placeholder="Search anything globally..."
           className="paragraph-regular no-focus mx-3 placeholder background-light800_darkgradient border-none shadow-none outline-none"
+          alt="Search Input"
         />
       </div>
     </div>
