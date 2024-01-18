@@ -15,7 +15,6 @@ const Home = async () => {
   // call the get all question server action
   const result = await getQuestions({});
 
-  console.log(result);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 
 let isConnected = false;
@@ -23,7 +23,7 @@ export async function connectToDatabase(){
     try {
         // const databaseUrl = process.env.DATABASE_URL as string; // Assert that it's a string
         // Connect here
-        await mongoose.connect('mongodb://localhost:27017', {
+        await mongoose.connect( process.env.DATABASE_URL!, {
             dbName: 'DevFlow'
            
         });
