@@ -1,7 +1,9 @@
-import RightSidebar from "@/components/shared/RightSidebar";
-import LeftSidebar from "@/components/shared/navbar/LeftSidebar";
-import Navbar from "@/components/shared/navbar/Navbar";
-import React from "react";
+/* eslint-disable camelcase */
+
+import React from 'react';
+import RightSidebar from '@/components/shared/RightSidebar';
+import LeftSidebar from '@/components/shared/navbar/LeftSidebar';
+import Navbar from '@/components/shared/navbar/Navbar';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -14,7 +16,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </section>
         <RightSidebar />
       </div>
-      Toaster
+      {/* Toaster */}
       {/* //notification popup */}
     </main>
   );

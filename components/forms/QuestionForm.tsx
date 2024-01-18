@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
@@ -27,7 +27,6 @@ import { QuestionsSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
-import { title } from "process";
 import { usePathname, useRouter } from "next/navigation";
 
 const type: any = "dit";
@@ -58,7 +57,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
     setIsSubmitting(true);
 
     try {
-      ///make async call
+      /// make async call
 
       // contain all form data
       await createQuestion({
@@ -74,7 +73,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
     } catch (error) {
     } finally {
     }
-    console.log(values);
+    // console.log(values);
   }
 
   //handle for tags on Enter press
@@ -85,7 +84,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
     if (e.key === "Enter" && field.name === "tags") {
       e.preventDefault();
 
-      //gettingthe input
+      // gettingthe input
       const tagInput = e.target as HTMLInputElement;
       const tagValue = tagInput.value.trim();
 
@@ -96,7 +95,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
             message: "Tag must be less than 15 characters.",
           });
         }
-        //ensure we dont add duplicat tags
+        // ensure we dont add duplicat tags
 
         if (!field.value.includes(tagValue as never)) {
           form.setValue("tags", [...field.value, tagValue]);
@@ -117,8 +116,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
     form.setValue("tags", newTags);
   }
 
-
-  console.log("API Key:", process.env.TINYMCE_EDITOR_API_KEY);
+  // console.log("API Key:", process.env.TINYMCE_EDITOR_API_KEY);
 
   return (
     <Form {...form}>
@@ -162,9 +160,8 @@ const QuestionForm = ({ mongoUserId }: Props) => {
               </FormLabel>
               <FormControl className="mt-3.5  background-light900_dark300">
                 {/* add a Todo and editor comp ===TINY MCE*/}
-                <Editor //Todo:work on the styling darkmode and env====================================\\\\\\\\\\\\\
+                <Editor // Todo:work on the styling darkmode and env====================================\\\\\\\\\\\\\
                   apiKey={process.env.TINYMCE_EDITOR_API_KEY}
-
                   onInit={(evt, editor) => {
                     //@ts-ignore
                     editorRef.current = editor;
@@ -251,7 +248,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
             </FormItem>
           )}
         />
-        {/* //button tosubmit/edit form  */}
+        {/* // button tosubmit/edit form  */}
         <Button
           type="submit"
           className="primary-gradient w-fit !text-light-900"

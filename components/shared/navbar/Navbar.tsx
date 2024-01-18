@@ -5,56 +5,50 @@ import Image from 'next/image';
 import Theme from './Theme';
 import MobileNav from './MobileNav';
 import GlobalSearch from './GlobalSearch';
+// ... (imports remain the same)
 
 const Navbar = () => {
   return (
     <div>
+      <nav className='fixed z-50 w-full p-6 gap-5 flex-between
+        background-light900_dark200 shadow-light-300 dark:shadow-none sm:p-0 sm:px-12'>
 
-        <nav className='flex-between z-50 background-light900_dark200
-            fixed w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm-px-12'   >
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/assets/images/site-logo.svg"
+            width={23}
+            height={23}
+            alt='DevFlow'
+          />
+          <p className="max-sm:hidden h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900">
+            Dev <span className="text-primary-500">OverFlow</span>
+          </p>
+        </Link>
 
-              <Link href="/" className="items-center  flex gap-2">
+        <GlobalSearch />
 
-                  <Image 
-                    src="/assets/images/site-logo.svg"
-                    width={23}
-                    height={23}
-                    alt='DevFlow'
-                  />
+        <div className="flex-between gap-5">
+          <Theme />
 
-                  <p className="h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900 max-sm:hidden">
-                    Dev <span className="text-primary-500">OverFlow</span>
-                </p>
-              </Link>
+          <SignedIn>
+            <UserButton
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: "h-10 w-10",
+                },
+                variables: {
+                  colorPrimary: "#ff7000",
+                },
+              }}
+            />
+          </SignedIn>
 
-              <GlobalSearch />
-
-              <div className="flex-between gap-5">
-                
-                <Theme />
-              
-                <SignedIn>
-                  <UserButton
-                    afterSignOutUrl="/"
-                    appearance={{
-                      elements: {
-                        avatarBox: "h-10 w-10",
-                      },
-                      variables: {
-                        colorPrimary: "#ff7000",
-                      },
-                    }}
-                  />
-                </SignedIn>
-
-                <MobileNav />
-              </div>
-
-        </nav>
-
-
+          <MobileNav />
+        </div>
+      </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

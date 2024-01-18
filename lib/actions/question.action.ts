@@ -14,7 +14,7 @@ export async function getQuestions(params:GetQuestionsParams){
     try {
         connectToDatabase()
 
-        //get all questions
+        // get all questions
         const questions =await Question.find({})
         .populate({path: 'tags',model:Tag})
         .populate({path: 'author',model:User})
@@ -25,13 +25,13 @@ export async function getQuestions(params:GetQuestionsParams){
 
         return {questions}
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         throw error
     }
 }
 
 
-//handke creating questions
+// handke creating questions
 export async function createQuestion(params: any) {
   try {
     /// connect to Db
@@ -39,7 +39,7 @@ export async function createQuestion(params: any) {
 
     const { title, author, content, tags, path } = params;
 
-    //create new Question
+    // create new Question
     const question = await Question.create({
       title,
       author,
@@ -49,10 +49,10 @@ export async function createQuestion(params: any) {
 
     const tagDocument = []
 
-    //create the tags or get them i fthey already exist
+    // create the tags or get them i fthey already exist
     for(const tag of tags){
         const existingTag = await Tag.findOneAndUpdate(
-            //regular expression search
+            // regular expression search
             { name: { $regex: new RegExp(`^${tag}$`, "i") } }, 
             { $setOnInsert: { name: tag }, $push: { questions: question._id } },
             { upsert: true, new: true }
@@ -60,12 +60,12 @@ export async function createQuestion(params: any) {
 
           tagDocument.push(existingTag._id);
     }
-    ///makes the relation btw tag   question
+    // makes the relation btw tag   question
     await Question.findByIdAndUpdate(question._id,{
         $push:{tags : {$each: tagDocument}}
     });
 
-    /// retuen to home page after crdating question
+    // retuen to home page after crdating question
     revalidatePath(path)
   } catch (error) {}
 }

@@ -10,7 +10,7 @@ interface Props {
   showCount?: boolean;
 }
 
-const RenderTag = ({  _id, name, totalCount, showCount }: Props) => {
+const RenderTag = ({ _id, name, totalCount, showCount }: Props) => {
   return (
     <Link href={`./tags/${_id}`} className="flex justify-between mt-4 gap-2">
       <Badge

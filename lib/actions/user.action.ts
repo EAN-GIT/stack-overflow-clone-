@@ -8,7 +8,7 @@ import { Question } from "@/models/question.model";
 
 export async function createUser(userData: CreateUserParams) {
   try {
-    /// connect to Db
+    // connect to Db
     connectToDatabase();
 
     // create new user//
@@ -16,7 +16,7 @@ export async function createUser(userData: CreateUserParams) {
 
     return newUser;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
@@ -28,10 +28,10 @@ export async function updateUser(params: UpdateUserParams) {
     // update  user data//
     await User.findByIdAndUpdate({ clerkId }, updateData, { new: true });
 
-    //refresh page with  nw data
+    // refresh page with  nw data
     revalidatePath(path);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
@@ -47,28 +47,28 @@ export async function deleteUser(params: DeleteUserParams) {
       throw new Error("User not found");
     }
 
-    //delete everthing that the user has ever done e.g commets questions,answers etc
-    const userQuestionid = await Question.find({ author: user._id }).distinct(
-      "_id"
-    );
+    // delete everthing that the user has ever done e.g commets questions,answers etc
+    // const userQuestionid = await Question.find({ author: user._id }).distinct(
+    //   "_id"
+    // );
 
-    //delete user questions
+    // delete user questions
     await Question.deleteMany({ author: user._id });
 
     // Todo: delete user answers ,comments etc
 
-    //finally delete the user
+    // finally delete the user
     const deletedUser = await User.findOneAndDelete(user._id);
 
     return deletedUser;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
 export async function getUserId(params: any) {
   try {
-    /// connect to Db
+    // connect to Db
     connectToDatabase();
 
     // extract id from params
@@ -78,6 +78,6 @@ export async function getUserId(params: any) {
 
     return user;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
