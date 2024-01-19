@@ -1,44 +1,42 @@
+"use client";
 
-'use client'
-
-import React from 'react'
+import React from "react";
 
 import {
-    Menubar,
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarTrigger,
-  } from "@/components/ui/menubar"
-  
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 
-import { useTheme } from '@/app/context/ThemeProvider'
-import Image from 'next/image'
-import { themes } from '@/constants'
+import { useTheme } from "@/app/context/ThemeProvider";
+import Image from "next/image";
+import { themes } from "@/constants";
 // ... (imports remain the same)
 
 const Theme = () => {
   const { mode, setMode } = useTheme();
 
   return (
-    <Menubar className='relative bg-transparent border-none shadow-none'>
+    <Menubar className="relative bg-transparent border-none shadow-none">
       <MenubarMenu>
         <MenubarTrigger className="focus:bg-light-900 data-[state=open]:bg-light-900 dark:focus:bg-dark-200 dark:data-[state=open]:bg-dark-200">
-          {mode === 'light' ? (
+          {mode === "light" ? (
             <Image
               src="/assets/icons/sun.svg"
               width={20}
               height={20}
-              alt='sun'
-              className='active-theme'
+              alt="sun"
+              className="active-theme"
             />
           ) : (
             <Image
-              src='/assets/icons/moon.svg'
+              src="/assets/icons/moon.svg"
               width={20}
               height={20}
-              alt='moon'
-              className='active-theme'
+              alt="moon"
+              className="active-theme"
             />
           )}
         </MenubarTrigger>
@@ -49,14 +47,14 @@ const Theme = () => {
               onClick={() => {
                 setMode(item.value);
 
-                if (item.value !== 'system') {
+                if (item.value !== "system") {
                   localStorage.theme = item.value;
                 } else {
-                  localStorage.removeItem('theme');
+                  localStorage.removeItem("theme");
                 }
               }}
               className={`flex items-center gap-4 px-2.5 py-2 dark:focus:bg-dark-400 ${
-                mode === item.value ? 'bg-light-300 dark:bg-dark-400' : ''
+                mode === item.value ? "bg-light-300 dark:bg-dark-400" : ""
               }`}
             >
               <Image
@@ -64,11 +62,13 @@ const Theme = () => {
                 alt={item.value}
                 width={16}
                 height={16}
-                className={`${mode === item.value && 'active-theme'}`}
+                className={`${mode === item.value && "active-theme"}`}
               />
               <p
                 className={`body-semibold text-light-500 ${
-                  mode === item.value ? 'text-primary-500' : 'text-dark100_light900'
+                  mode === item.value
+                    ? "text-primary-500"
+                    : "text-dark100_light900"
                 }`}
               >
                 {item.value}

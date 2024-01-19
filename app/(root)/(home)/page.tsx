@@ -9,12 +9,9 @@ import NoResult from "@/components/shared/NoResult";
 import QuestionsCard from "@/components/forms/QuestionsCard";
 import { getQuestions } from "@/lib/actions/question.action";
 
-
-
 const Home = async () => {
   // call the get all question server action
   const result = await getQuestions({});
-
 
   return (
     <>
@@ -22,7 +19,7 @@ const Home = async () => {
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
         <Link href="/ask-question" className="flex justify-end max-sm:w-full ">
-          <Button className="primary-gradient !text-light-900 min-h-[46px] px-4 py-3">
+          <Button className="min-h-[46px] px-4 py-3 primary-gradient !text-light-900">
             Ask a Question
           </Button>
         </Link>
@@ -80,4 +77,3 @@ const Home = async () => {
 };
 
 export default Home;
-

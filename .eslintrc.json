@@ -3,16 +3,16 @@
 //   "standard","plugin:tailwindcss/recommended","prettier", "prettier/standard"]
 // }
 
-
 {
+  "root": true,
   "extends": [
     "next/core-web-vitals",
     "standard",
     "plugin:tailwindcss/recommended",
     "prettier"
   ],
-  "plugins": [],
+  "plugins": ["tailwindcss", "prettier"],
   "rules": {
-    // Your rules here
+    "prettier/prettier": "error"
   }
 }

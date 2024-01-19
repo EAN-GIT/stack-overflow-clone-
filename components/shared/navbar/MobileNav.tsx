@@ -7,20 +7,20 @@
  * The component also includes Sign In and Sign Up buttons for users who are not signed in.
  * Utilizes the Sheet component for the collapsible sidebar.
  */
-'use client'
-import React from 'react';
+"use client";
+import React from "react";
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import Image from 'next/image';
-import Link from 'next/link';
-import { SignedOut } from '@clerk/nextjs';
-import { Button } from '@/components/ui/button';
-import { sidebarLinks } from '@/constants';
-import { usePathname } from 'next/navigation';
+} from "@/components/ui/sheet";
+import Image from "next/image";
+import Link from "next/link";
+import { SignedOut } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import { sidebarLinks } from "@/constants";
+import { usePathname } from "next/navigation";
 
 /**
  * NavContent Component:
@@ -42,18 +42,18 @@ const NavContent = () => {
               href={item.route}
               className={`${
                 isActive
-                  ? 'primary-gradient rounded-lg text-light-900'
-                  : 'text-dark300_light900'
-              } flex items-center justify-start bg-transparent gap-4 p-4`}
+                  ? "primary-gradient rounded-lg text-light-900"
+                  : "text-dark300_light900"
+              } flex justify-start items-center gap-4 p-4 bg-transparent`}
             >
               <Image
-                className={`${isActive ? '' : 'invert-colors'}`}
+                className={`${isActive ? "" : "invert-colors"}`}
                 src={item.imgURL}
                 alt={item.label}
                 width={20}
                 height={20}
               />
-              <p className={`${isActive ? 'base-bold' : 'base-medium'}`}>
+              <p className={`${isActive ? "base-bold" : "base-medium"}`}>
                 {item.label}
               </p>
             </Link>
@@ -83,7 +83,7 @@ const MobileNav = () => {
 
       <SheetContent
         side="left"
-        className="border-none background-light900_dark200"
+        className="background-light900_dark200 border-none"
       >
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -106,7 +106,7 @@ const MobileNav = () => {
             <div className="flex flex-col gap-3">
               <SheetClose asChild>
                 <Link href="/sign-in">
-                  <Button className="w-full min-h-[41px] px-4 py-3 btn-secondary rounded-lg shadow-none small-medium">
+                  <Button className="w-full min-h-[41px] px-4 py-3 rounded-lg btn-secondary shadow-none small-medium">
                     <span className="primary-text-gradient">Log In</span>
                   </Button>
                 </Link>
@@ -114,7 +114,7 @@ const MobileNav = () => {
 
               <SheetClose asChild>
                 <Link href="/sign-up">
-                  <Button className="w-full min-h-[41px] px-4 py-3 text-dark400_light900 btn-tertiary rounded-lg shadow-none small-medium light-border-2">
+                  <Button className="w-full min-h-[41px] px-4 py-3 rounded-lg text-dark400_light900 btn-tertiary shadow-none small-medium light-border-2">
                     Sign Up
                   </Button>
                 </Link>
