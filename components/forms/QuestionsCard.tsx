@@ -58,7 +58,7 @@ const QuestionsCard = ({
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl={author.picture}
+            imgUrl="/assets/icons/like.svg"
           alt="user"
           value={author.name}
           title={` - asked ${getTimestamp(createdAt)}`}
@@ -73,6 +73,7 @@ const QuestionsCard = ({
             imgUrl="/assets/icons/like.svg"
             alt="Upvotes"
             value={formatAndDivideNumber(upvotes.length)}
+            
             title=" Votes"
             textStyles="small-medium text-dark400_light800"
           />
