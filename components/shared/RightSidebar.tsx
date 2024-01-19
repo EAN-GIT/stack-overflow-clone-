@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 import RenderTag from "./RenderTag";
 
-
 const hotQuestion = [
   {
     _id: "1",
@@ -95,7 +94,6 @@ const RightSidebar = () => {
           ))}
         </div>
       </div>
-
     </section>
   );
 };

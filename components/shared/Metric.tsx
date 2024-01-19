@@ -42,7 +42,7 @@ const Metric = ({
       </p>
     </>
   );
-// if its clickable display 
+  // if its clickable display
   if (href) {
     return (
       <Link href={href} className="flex-center gap-1">

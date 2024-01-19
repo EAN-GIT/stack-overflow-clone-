@@ -80,7 +80,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
   // handle for tags on Enter press
   function handleInputKeyDown(
     e: React.KeyboardEvent<HTMLInputElement>,
-    field: any
+    field: any,
   ) {
     if (e.key === "Enter" && field.name === "tags") {
       e.preventDefault();
@@ -154,14 +154,13 @@ const QuestionForm = ({ mongoUserId }: Props) => {
           control={form.control}
           name="explanation"
           render={({ field }) => (
-            <FormItem className="flex w-full gap-3 flex-col">
+            <FormItem className=" flex gap-3 w-full  flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
-
-                {/* add a Todo and editor comp ===TINY MCE*/}
+                {/* add a Todo and editor comp === TINY MCE */}
                 <Editor
                   // Todo: work on the styling darkmode and env
                   apiKey={process.env.TINYMCE_EDITOR_API_KEY}
@@ -185,7 +184,9 @@ const QuestionForm = ({ mongoUserId }: Props) => {
 
                     ai_request: (request: string, respondWith: any) =>
                       respondWith.string(() =>
-                      Promise.reject(new Error("See docs to implement AI Assistant"))
+                        Promise.reject(
+                          new Error("See docs to implement AI Assistant"),
+                        ),
                       ),
                   }}
                   initialValue=""

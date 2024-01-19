@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const GlobalSearch = () => {
   return (
@@ -25,3 +26,5 @@ const GlobalSearch = () => {
 };
 
 export default GlobalSearch;
+
+
