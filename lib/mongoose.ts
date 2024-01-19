@@ -27,5 +27,6 @@ export async function connectToDatabase() {
     // console.log('Mongo_db connected successfully');
   } catch (error) {
     console.error("Mongo_db connection error:", error);
+    return { error: 'An unexpected error occurred' };
   }
 }

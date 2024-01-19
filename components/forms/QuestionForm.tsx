@@ -71,6 +71,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
       // navigate back home
       router.push("/");
     } catch (error) {
+      return { error: 'An unexpected error occurred' };
     } finally {
       setIsSubmitting(false);
     }
