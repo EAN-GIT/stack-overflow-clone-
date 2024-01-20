@@ -14,7 +14,7 @@ export async function connectToDatabase() {
   }
 
   if (isConnected) {
-    // console.log('Mongo_db is already connected')
+    console.log('Mongo_db is already connected')
     return;
   }
   try {
