@@ -29,7 +29,7 @@ import { usePathname, useRouter } from "next/navigation";
 // Load environment variables
 dotenv.config();
 
-const type: any = "dit";
+const type: any = "create";
 
 interface Props {
   mongoUserId: string;
@@ -41,6 +41,8 @@ const QuestionForm = ({ mongoUserId }: Props) => {
   const pathname = usePathname();
   // state to handle submit action
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -255,16 +257,17 @@ const QuestionForm = ({ mongoUserId }: Props) => {
             </FormItem>
           )}
         />
+        {/* // Todo: Button submiting error /////////////////////////////////////////////// */}
         {/* // button tosubmit/edit form  */}
-        <Button
-          type="submit"
-          className="primary-gradient w-fit !text-light-900"
-          disabled={isSubmitting}
-        >
+         <Button type="submit" className="primary-gradient w-fit !text-light-900" disabled={isSubmitting}>
           {isSubmitting ? (
-            <>{type === "edit" ? "Editing..." : "Posting..."}</>
+            <>
+              {type === 'edit' ? 'Editing...' : 'Posting...' }
+            </>
           ) : (
-            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+            <>
+              {type === 'edit' ? 'Edit Question' : 'Ask a Question'}
+            </>
           )}
         </Button>
       </form>
