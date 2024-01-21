@@ -1,10 +1,13 @@
 // 'use client'
 import QuestionForm from "@/components/forms/QuestionForm";
 import { getUserId } from "@/lib/actions/user.action";
+import { auth } from "@clerk/nextjs";
 import React from "react";
 
 const Page = async () => {
-  const userId = "123456";
+
+  const {userId}= auth();
+  // const userId = "123456";
 
   const mongoUser = await getUserId({ userId });
 

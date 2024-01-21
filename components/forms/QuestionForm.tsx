@@ -164,9 +164,9 @@ const QuestionForm = ({ mongoUserId }: Props) => {
               </FormLabel>
               <FormControl className="mt-3.5">
                 {/* add a Todo and editor comp === TINY MCE */}
-                {/* <Editor
+                <Editor
                   // Todo: work on the styling darkmode and env
-                  apiKey={process.env.TINYMCE_EDITOR_API_KEY}
+                  apiKey="ecnx6s6i8wporc6dj3jl8ermzcqpojvg9g6iei7jh34ymi3w"
                   onInit={(evt, editor) => {
                     // @ts-ignore
                     editorRef.current = editor;
@@ -193,7 +193,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
                       ),
                   }}
                   initialValue=""
-                /> */}
+                />
                 {/* ); */}
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
@@ -271,5 +271,6 @@ const QuestionForm = ({ mongoUserId }: Props) => {
     </Form>
   );
 };
+
 
 export default QuestionForm;
