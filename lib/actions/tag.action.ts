@@ -1,8 +1,9 @@
 
-'use client'
+'use server'
 import User from "@/models/user.model";
 import { connectToDatabase } from "../mongoose";
-import { GetTopInteractedTagsParams } from "./shared";
+import { GetAllTagsParams, GetTopInteractedTagsParams } from "./shared";
+import Tag from "@/models/tag.model";
 
 
 
@@ -24,6 +25,26 @@ export async function getTopInteractedtags(params:GetTopInteractedTagsParams){
 
   }
     catch (error) {
+       return { error: 'An unexpected error occurred' };
+    }
+  }
+
+
+  // get all tags action
+
+  export async function getAllTags(params:GetAllTagsParams){
+  
+    try {
+      connectToDatabase()
+  
+      // const {page =1 ,pageSize =20,filter,searchQuery} = params;
+  
+      const tags =  await Tag.find({})
+      // .sort({createdAt:-1})
+  
+      return {tags
+  }
+    } catch (error) {
        return { error: 'An unexpected error occurred' };
     }
   }
