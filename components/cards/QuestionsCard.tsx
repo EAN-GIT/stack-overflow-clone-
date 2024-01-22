@@ -5,7 +5,6 @@ import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
 
 interface QuestionProps {
-  // clerkId?: string | null;
   _id: string;
   title: string;
   tags: {
@@ -16,7 +15,6 @@ interface QuestionProps {
     _id: string;
     name: string;
     picture: string;
-    //   clerkId?: string | null;
   };
   upvotes: string[];
   views: number;
@@ -57,21 +55,30 @@ const QuestionsCard = ({
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
-        <Metric
-          imgUrl={author.picture}
+        {/* <Metric
+           imgUrl={author.picture}
           alt="user"
           value={author.name}
           title={` - asked ${getTimestamp(createdAt)}`}
-          href={`/profile/${author._id}`}
+          href= {`/profile/${author._id}`}
           isAuthor
           textStyles="body-medium text-dark400_light700"
-        />
+        /> */}
+        {/* {author && (
+    <Metric
+      imgUrl={author.picture}
+      alt="user"
+      value={author.name}
+      title={` - asked ${getTimestamp(createdAt)}`}
+    />
+  )} */}
 
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
           <Metric
             imgUrl="/assets/icons/like.svg"
             alt="Upvotes"
             value={formatAndDivideNumber(upvotes.length)}
+            
             title=" Votes"
             textStyles="small-medium text-dark400_light800"
           />

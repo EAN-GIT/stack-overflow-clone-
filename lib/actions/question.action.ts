@@ -54,5 +54,7 @@ export async function createQuestion(params: any) {
 
     // retuen to home page after crdating question
     revalidatePath(path);
-  } catch (error) {}
+  } catch (error) {
+    return { error: 'An unexpected error occurred' };
+  }
 }

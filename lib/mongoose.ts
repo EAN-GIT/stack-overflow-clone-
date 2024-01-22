@@ -14,7 +14,7 @@ export async function connectToDatabase() {
   }
 
   if (isConnected) {
-    // console.log('Mongo_db is already connected')
+    console.log('Mongo_db is already connected')
     return;
   }
   try {
@@ -24,8 +24,9 @@ export async function connectToDatabase() {
       dbName: "DevFlow",
     });
     isConnected = true; // Set isConnected to true upon successful connection
-    // console.log('Mongo_db connected successfully');
+    console.log('Mongo_db connected successfully');
   } catch (error) {
     console.error("Mongo_db connection error:", error);
+    return { error: 'An unexpected error occurred' };
   }
 }
