@@ -6,7 +6,7 @@ import Filter from "../../../components/shared/Filter";
 import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
-import QuestionsCard from "@/components/forms/QuestionsCard";
+import QuestionsCard from "@/components/cards/QuestionsCard";
 import { getQuestions } from "@/lib/actions/question.action";
 
 const Home = async () => {
