@@ -44,7 +44,7 @@ const NavContent = () => {
                 isActive
                   ? "primary-gradient rounded-lg text-light-900"
                   : "text-dark300_light900"
-              } flex justify-start items-center gap-4 p-4 bg-transparent`}
+              } flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
                 className={`${isActive ? "" : "invert-colors"}`}
@@ -92,7 +92,7 @@ const MobileNav = () => {
             height={23}
             alt="DevFlow"
           />
-          <p className="font-spaceGrotesk h2-bold text-dark100_light900">
+          <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
             Dev <span className="text-primary-500">OverFlow</span>
           </p>
         </Link>
@@ -106,7 +106,7 @@ const MobileNav = () => {
             <div className="flex flex-col gap-3">
               <SheetClose asChild>
                 <Link href="/sign-in">
-                  <Button className="w-full min-h-[41px] px-4 py-3 rounded-lg btn-secondary shadow-none small-medium">
+                  <Button className="btn-secondary small-medium min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
                     <span className="primary-text-gradient">Log In</span>
                   </Button>
                 </Link>
@@ -114,7 +114,7 @@ const MobileNav = () => {
 
               <SheetClose asChild>
                 <Link href="/sign-up">
-                  <Button className="w-full min-h-[41px] px-4 py-3 rounded-lg text-dark400_light900 btn-tertiary shadow-none small-medium light-border-2">
+                  <Button className="text-dark400_light900 btn-tertiary small-medium light-border-2 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
                     Sign Up
                   </Button>
                 </Link>

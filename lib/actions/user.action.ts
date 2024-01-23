@@ -2,26 +2,27 @@
 
 import User from "@/models/user.model";
 import { connectToDatabase } from "../mongoose";
-import { CreateUserParams, DeleteUserParams, GetAllUsersParams, UpdateUserParams } from "./shared";
+import {
+  CreateUserParams,
+  DeleteUserParams,
+  GetAllUsersParams,
+  UpdateUserParams,
+} from "./shared";
 import { revalidatePath } from "next/cache";
 import { Question } from "@/models/question.model";
 
-
-
-export async function getAllUsers(params:GetAllUsersParams){
-
+export async function getAllUsers(params: GetAllUsersParams) {
   try {
-    connectToDatabase()
+    connectToDatabase();
 
     // const {page =1 ,pageSize =20,filter,searchQuery} = params;
 
-    const users =  await User.find({})
+    const users = await User.find({});
     // .sort({createdAt:-1})
 
-    return {users
-}
+    return { users };
   } catch (error) {
-     return { error: 'An unexpected error occurred' };
+    return { error: "An unexpected error occurred" };
   }
 }
 
@@ -36,7 +37,7 @@ export async function createUser(userData: CreateUserParams) {
     return newUser;
   } catch (error) {
     // console.log(error);
-    return { error: 'An unexpected error occurred' };
+    return { error: "An unexpected error occurred" };
   }
 }
 
@@ -52,7 +53,7 @@ export async function updateUser(params: UpdateUserParams) {
     revalidatePath(path);
   } catch (error) {
     // console.log(error);
-    return { error: 'An unexpected error occurred' };
+    return { error: "An unexpected error occurred" };
   }
 }
 
@@ -84,7 +85,7 @@ export async function deleteUser(params: DeleteUserParams) {
     return deletedUser;
   } catch (error) {
     // console.log(error);
-    return { error: 'An unexpected error occurred' };
+    return { error: "An unexpected error occurred" };
   }
 }
 
@@ -101,7 +102,7 @@ export async function getUserId(params: any) {
     return user;
   } catch (error) {
     // console.log(error);
-     // Log error and return generic error message
-     return { error: 'An unexpected error occurred' };
+    // Log error and return generic error message
+    return { error: "An unexpected error occurred" };
   }
 }

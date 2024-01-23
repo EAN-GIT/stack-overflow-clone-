@@ -19,7 +19,7 @@ const Home = async () => {
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
         <Link href="/ask-question" className="flex justify-end max-sm:w-full ">
-          <Button className="min-h-[46px] px-4 py-3 primary-gradient !text-light-900">
+          <Button className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900">
             Ask a Question
           </Button>
         </Link>
@@ -47,7 +47,7 @@ const Home = async () => {
       <HomeFilters />
 
       {/* queston tag  goes here */}
-      <div className="flex mt-10 w-full flex-col gap-6">
+      <div className="mt-10 flex w-full flex-col gap-6">
         {result.questions.length > 0 ? (
           // Loop over the questions array and render the QuestionCard component
           result.questions.map((question) => (
