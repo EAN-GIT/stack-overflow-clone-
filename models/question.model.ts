@@ -6,7 +6,7 @@ interface IQuestion extends Document {
   title: string;
   content: string;
   tags: Schema.Types.ObjectId[];
-  author: Schema.Types.ObjectId; //reference to the user who owns the todo
+  author: Schema.Types.ObjectId; // reference to the user who owns the todo
   createdDate: Date;
   answers: Schema.Types.ObjectId[];
   upvotes: Schema.Types.ObjectId[];

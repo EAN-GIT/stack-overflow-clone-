@@ -1,11 +1,32 @@
+/* eslint-disable no-useless-catch */
 "use server";
 
 import { Question } from "@/models/question.model";
 import { connectToDatabase } from "../mongoose";
 import Tag from "@/models/tag.model";
-import { GetQuestionsParams } from "./shared";
+import { GetQuestionByIdParams, GetQuestionsParams } from "./shared";
 import User from "@/models/user.model";
 import { revalidatePath } from "next/cache";
+
+export async function getQuestionbyId(params: GetQuestionByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId } = params;
+    // get all questions
+    const question = await Question.findById(questionId)
+      .populate({ path: "tags", model: Tag, select: "_id name" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name picture",
+      });
+
+    return question;
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function getQuestions(params: GetQuestionsParams) {
   connectToDatabase();
@@ -55,6 +76,6 @@ export async function createQuestion(params: any) {
     // retuen to home page after crdating question
     revalidatePath(path);
   } catch (error) {
-    return { error: 'An unexpected error occurred' };
+    return { error: "An unexpected error occurred" };
   }
 }

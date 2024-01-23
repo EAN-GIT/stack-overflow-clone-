@@ -25,6 +25,7 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "@/app/context/ThemeProvider";
 
 // Load environment variables
 dotenv.config();
@@ -36,12 +37,13 @@ interface Props {
 }
 
 const QuestionForm = ({ mongoUserId }: Props) => {
+  const { mode } = useTheme();
+
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
   // state to handle submit action
   const [isSubmitting, setIsSubmitting] = useState(false);
-
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
@@ -73,7 +75,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
       // navigate back home
       router.push("/");
     } catch (error) {
-      return { error: 'An unexpected error occurred' };
+      return { error: "An unexpected error occurred" };
     } finally {
       setIsSubmitting(false);
     }
@@ -120,9 +122,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
     form.setValue("tags", newTags);
   }
 
-  
   // console.log("API Key:", process.env.TINYMCE_EDITOR_API_KEY);
-
 
   return (
     <Form {...form}>
@@ -159,7 +159,7 @@ const QuestionForm = ({ mongoUserId }: Props) => {
           control={form.control}
           name="explanation"
           render={({ field }) => (
-            <FormItem className=" flex gap-3 w-full  flex-col">
+            <FormItem className=" flex w-full flex-col  gap-3">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
@@ -180,6 +180,8 @@ const QuestionForm = ({ mongoUserId }: Props) => {
                       "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
                     toolbar:
                       "undo redo  | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                     tinycomments_mode: "embedded",
                     tinycomments_author: "Author name",
                     mergetags_list: [
@@ -259,21 +261,20 @@ const QuestionForm = ({ mongoUserId }: Props) => {
         />
         {/* // Todo: Button submiting error /////////////////////////////////////////////// */}
         {/* // button tosubmit/edit form  */}
-         <Button type="submit" className="primary-gradient w-fit !text-light-900" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          className="primary-gradient w-fit !text-light-900"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? (
-            <>
-              {type === 'edit' ? 'Editing...' : 'Posting...' }
-            </>
+            <>{type === "edit" ? "Editing..." : "Posting..."}</>
           ) : (
-            <>
-              {type === 'edit' ? 'Edit Question' : 'Ask a Question'}
-            </>
+            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
           )}
         </Button>
       </form>
     </Form>
   );
 };
-
 
 export default QuestionForm;
