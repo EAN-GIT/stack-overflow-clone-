@@ -16,9 +16,19 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useTheme } from "@/app/context/ThemeProvider";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { createAnswer } from "@/lib/actions/answer.action";
+import { usePathname } from "next/navigation";
 
-const Answer = () => {
+interface Props {
+  question: string;
+  questionId: string;
+  authorId: string;
+}
+
+const Answer = ({ question, questionId, authorId }: Props) => {
   const { mode } = useTheme();
+
+  const pathname = usePathname();
 
   // eslint-disable-next-line no-unused-vars
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,7 +42,34 @@ const Answer = () => {
     },
   });
 
-  const handleCreateAnswer = () => {};
+  const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
+    setIsSubmitting(true);
+
+    try {
+      await createAnswer({
+        content: values.answer,
+        author: JSON.parse(authorId),
+        question: JSON.parse(questionId),
+        path: pathname,
+      });
+
+      // clear form content prepping for new answer to be types
+      form.reset();
+
+      // reset editor
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+
+        editor.setContent("");
+      }
+      // eslint-disable-next-line no-useless-catch
+    } catch (error) {
+      // console.log(error);
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div>
