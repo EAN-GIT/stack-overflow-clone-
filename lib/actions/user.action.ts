@@ -102,9 +102,8 @@ export async function getUserId(params: any) {
 
     return user;
   } catch (error) {
-    // console.log(error);
-    // Log error and return generic error message
-    return { error: "An unexpected error occurred" };
+    console.log(error);
+    throw error;
   }
 }
 
