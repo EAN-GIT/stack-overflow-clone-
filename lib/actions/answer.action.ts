@@ -4,7 +4,11 @@
 
 import { Answer } from "@/models/answer.model";
 import { connectToDatabase } from "../mongoose";
-import { CreateAnswerParams, GetAnswersParams } from "./shared";
+import {
+  AnswerVoteParams,
+  CreateAnswerParams,
+  GetAnswersParams,
+} from "./shared";
 import { Question } from "@/models/question.model";
 import { revalidatePath } from "next/cache";
 // import { User } from "lucide-react";
@@ -47,6 +51,71 @@ export async function getAllAnswers(params: GetAnswersParams) {
     return { answers };
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+}
+
+export async function upvoteAnswer(params: AnswerVoteParams) {
+  try {
+    connectToDatabase();
+
+    const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
+
+    let updateQuery = {};
+
+    if (hasupVoted) {
+      // If the user has already upvoted, remove their upvote
+      updateQuery = { $pull: { upvotes: userId } };
+    } else if (hasdownVoted) {
+      // If the user has downvoted, remove their downvote and add an upvote
+      updateQuery = {
+        $pull: { downvotes: userId },
+        $push: { upvotes: userId },
+      };
+    } else {
+      // If the user has not voted before, add their upvote
+      updateQuery = { $addToSet: { upvotes: userId } };
+    }
+
+    // Perform the update in the database using the updateQuery
+    const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
+      new: true,
+    });
+    // Trigger a revalidation for the specified path (used in caching strategies)
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function downvoteAnswer(params: AnswerVoteParams) {
+  try {
+    connectToDatabase();
+
+    const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
+
+    let updateQuery = {};
+
+    if (hasdownVoted) {
+      // If the user has already downvoted, remove their downvote
+      updateQuery = { $pull: { downvotes: userId } };
+    } else if (hasupVoted) {
+      // If the user has upvoted, remove their upvote and add a downvote
+      updateQuery = {
+        $push: { downvotes: userId },
+        $pull: { upvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { downvotes: userId } };
+    }
+
+    // Perform the update in the database using the updateQuery
+    const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
+      new: true,
+    });
+
+    revalidatePath(path);
+  } catch (error) {
     throw error;
   }
 }
