@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import Answer from "@/components/forms/Answer";
 import AllAnswers from "@/components/shared/AllAnswers";
 import Metric from "@/components/shared/Metric";
 import ParseHtml from "@/components/shared/ParseHtml";
@@ -6,19 +7,12 @@ import RenderTag from "@/components/shared/RenderTag";
 import { getQuestionbyId } from "@/lib/actions/question.action";
 import { getUserId } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
-import { Answer } from "@/models/answer.model";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Page = async ({ params, searchParams }: any) => {
-  const { id } = params;
-
-  // make call to questions action to fetch detila by id
-
-  const result = await getQuestionbyId({ questionId: id });
-
   const { userId: clerkId } = auth();
 
   let mongoUser;
@@ -29,6 +23,8 @@ const Page = async ({ params, searchParams }: any) => {
     mongoUser = await getUserId({ userId: clerkId });
   }
 
+  // make call to questions action to fetch detila by id
+  const result = await getQuestionbyId({ questionId: params.id });
   return (
     <div>
       <div className="flex-start w-full flex-col">
@@ -98,11 +94,11 @@ const Page = async ({ params, searchParams }: any) => {
         totalAnswers={result.answers.length}
       />
 
-      {/* <Answer
+      <Answer
         question={result.content}
-        questionId={JSON.stringify(result?._id)}
+        questionId={JSON.stringify(result._id)}
         authorId={JSON.stringify(mongoUser?._id)}
-      /> */}
+      />
     </div>
   );
 };

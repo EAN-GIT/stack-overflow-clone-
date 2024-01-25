@@ -3,7 +3,6 @@ import React, { useRef, useState } from "react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormMessage,
@@ -25,12 +24,11 @@ interface Props {
   authorId: string;
 }
 
-const Answer = ({ question, questionId, authorId }: Props) => {
+export const Answer = ({ question, questionId, authorId }: Props) => {
   const { mode } = useTheme();
 
   const pathname = usePathname();
 
-  // eslint-disable-next-line no-unused-vars
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const editorRef = useRef(null);
@@ -72,7 +70,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   };
 
   return (
-    <div>
+    <>
       <div className="flex flex-col justify-between sm:flex-row sm:items-center sm:gap-2">
         <h4 className="paragraph-semibold text-dark400_light800">
           Write your answer here
@@ -139,29 +137,25 @@ const Answer = ({ question, questionId, authorId }: Props) => {
                         ),
                     }}
                     initialValue=""
-                  />{" "}
+                  />
                 </FormControl>
-                <FormDescription className="body-regular mt-2.5 text-light-500">
-                  Introduce the problem and expand on what you put in the
-                  titles. Minumum 20 characters
-                </FormDescription>{" "}
+
                 <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
+          <div className="flex justify-end">
+            <Button
+              className="primary-gradient w-fit text-white"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </Button>
+          </div>
         </form>
-
-        <div className="flex justify-end">
-          <Button
-            className="primary-gradient w-fit text-white"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Submitting..." : "Submit"}
-          </Button>
-        </div>
       </Form>
-    </div>
+    </>
   );
 };
 
