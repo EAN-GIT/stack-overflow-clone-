@@ -17,23 +17,47 @@ export async function createUser(userData: CreateUserParams) {
     return newUser;
   } catch (error) {
     // console.log(error);
-    return { error: 'An unexpected error occurred' };
+    return { error: "An unexpected error occurred" };
   }
 }
+
+// export async function updateUser(params: UpdateUserParams) {
+//   try {
+//     connectToDatabase();
+
+//     const { clerkId, updateData, path } = params;
+//     // update  user data//
+//     await User.findByIdAndUpdate({ clerkId }, updateData, { new: true });
+
+//     // refresh page with  nw data
+//     revalidatePath(path);
+//   } catch (error) {
+//     // console.log(error);
+//     return { error: "An unexpected error occurred" };
+//   }
+// }
 
 export async function updateUser(params: UpdateUserParams) {
   try {
     connectToDatabase();
 
     const { clerkId, updateData, path } = params;
-    // update  user data//
-    await User.findByIdAndUpdate({ clerkId }, updateData, { new: true });
 
-    // refresh page with  nw data
+    const updatedUser = await User.findOneAndUpdate({ clerkId }, updateData, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      throw new Error(`User with clerkId ${clerkId} not found.`);
+    }
+
+    console.log(`User with clerkId ${clerkId} updated successfully.`);
     revalidatePath(path);
+    console.log(updateUser);
+    return updatedUser;
   } catch (error) {
-    // console.log(error);
-    return { error: 'An unexpected error occurred' };
+    console.error("Error updating user:", error);
+    throw error;
   }
 }
 
@@ -65,7 +89,7 @@ export async function deleteUser(params: DeleteUserParams) {
     return deletedUser;
   } catch (error) {
     // console.log(error);
-    return { error: 'An unexpected error occurred' };
+    return { error: "An unexpected error occurred" };
   }
 }
 
@@ -82,7 +106,7 @@ export async function getUserId(params: any) {
     return user;
   } catch (error) {
     // console.log(error);
-     // Log error and return generic error message
-     return { error: 'An unexpected error occurred' };
+    // Log error and return generic error message
+    return { error: "An unexpected error occurred" };
   }
 }
