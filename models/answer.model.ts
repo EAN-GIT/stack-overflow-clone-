@@ -1,22 +1,18 @@
-import { Schema, model, models, Document } from "mongoose";
+import { Schema, models, model, Document } from "mongoose";
 
 interface IAnswer extends Document {
-  content: string;
-  author: Schema.Types.ObjectId; // reference to the user who owns the todo
-  createdAt: Date;
+  author: Schema.Types.ObjectId;
   question: Schema.Types.ObjectId;
+  content: string;
   upvotes: Schema.Types.ObjectId[];
   downvotes: Schema.Types.ObjectId[];
+  createdAt: Date;
 }
 
-const answerSchema = new Schema<IAnswer>({
-  content: {
-    type: String,
-    required: true,
-  },
+const AnswerSchema = new Schema({
   author: {
     type: Schema.Types.ObjectId,
-    ref: "Author",
+    ref: "User",
     required: true,
   },
   question: {
@@ -24,9 +20,28 @@ const answerSchema = new Schema<IAnswer>({
     ref: "Question",
     required: true,
   },
-  createdAt: { type: Date, default: Date.now() },
-  upvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  downvotes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  content: {
+    type: String,
+    required: true,
+  },
+  upvotes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  downvotes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-export const Answer = models.Answer || model<IAnswer>("Answer", answerSchema);
+const Answer = models.Answer || model("Answer", AnswerSchema);
+
+export default Answer;

@@ -2,7 +2,7 @@
 /* eslint-disable no-useless-catch */
 "use server";
 
-import { Answer } from "@/models/answer.model";
+import Answer from "@/models/answer.model";
 import { connectToDatabase } from "../mongoose";
 import {
   AnswerVoteParams,

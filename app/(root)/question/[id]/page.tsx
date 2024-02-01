@@ -31,7 +31,7 @@ const Page = async ({ params, searchParams }: any) => {
     mongoUser = await getUserId({ userId: clerkId });
   }
 
-  // make call to questions action to fetch detila by id
+  // make call to questions action to fetch detila by id so we can display the number of question in all ansewr comp
   const result = await getQuestionbyId({ questionId: params.id });
   return (
     <div>
@@ -109,7 +109,7 @@ const Page = async ({ params, searchParams }: any) => {
 
       <AllAnswers
         questionId={result._id}
-        userId={mongoUser?._id}
+        userId={JSON.stringify(mongoUser._id)}
         totalAnswers={result.answers.length}
       />
 
@@ -121,7 +121,7 @@ const Page = async ({ params, searchParams }: any) => {
       <Answer
         question={result.content}
         questionId={JSON.stringify(result._id)}
-        authorId={JSON.stringify(mongoUser?._id)}
+        authorId={JSON.stringify(mongoUser._id)}
       />
     </div>
   );
