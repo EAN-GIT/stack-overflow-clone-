@@ -12,7 +12,7 @@ interface Props {
 
 const NoResult = ({ title, link, description, linkTitle }: Props) => {
   return (
-    <div className=" flex flex-col w-full items-center justify-center mt-10">
+    <div className=" mt-10 flex w-full flex-col items-center justify-center">
       {/* Light mode image */}
       <Image
         src="/assets/images/light-illustration.png"
