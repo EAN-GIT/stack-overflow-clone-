@@ -1,11 +1,36 @@
+/* eslint-disable no-useless-catch */
 "use server";
 
 import { Question } from "@/models/question.model";
 import { connectToDatabase } from "../mongoose";
 import Tag from "@/models/tag.model";
-import { GetQuestionsParams } from "./shared";
+import {
+  GetQuestionByIdParams,
+  GetQuestionsParams,
+  QuestionVoteParams,
+} from "./shared";
 import User from "@/models/user.model";
 import { revalidatePath } from "next/cache";
+
+export async function getQuestionbyId(params: GetQuestionByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId } = params;
+    // get all questions
+    const question = await Question.findById(questionId)
+      .populate({ path: "tags", model: Tag, select: "_id name" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name picture",
+      });
+
+    return question;
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function getQuestions(params: GetQuestionsParams) {
   connectToDatabase();
@@ -56,5 +81,67 @@ export async function createQuestion(params: any) {
     revalidatePath(path);
   } catch (error) {
     return { error: "An unexpected error occurred" };
+  }
+}
+
+export async function downvoteQuestion(params: QuestionVoteParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
+
+    let updateQuery = {};
+
+    if (hasdownVoted) {
+      // If the user has already downvoted, remove their downvote
+      updateQuery = { $pull: { downvotes: userId } };
+    } else if (hasupVoted) {
+      // If the user has upvoted, remove their upvote and add a downvote
+      updateQuery = {
+        $push: { downvotes: userId },
+        $pull: { upvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { downvotes: userId } };
+    }
+
+    // Perform the update in the database using the updateQuery
+    // await Question.updateOne({ _id: questionId }, updateQuery);
+    await Question.findByIdAndUpdate(questionId, updateQuery, { new: true });
+
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function upvoteQuestion(params: QuestionVoteParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
+
+    let updateQuery = {};
+
+    if (hasupVoted) {
+      // If the user has already upvoted, remove their upvote
+      updateQuery = { $pull: { upvotes: userId } };
+    } else if (hasdownVoted) {
+      // If the user has downvoted, remove their downvote and add a dupvote
+      updateQuery = {
+        $pull: { downvotes: userId },
+        $push: { upvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { upvotes: userId } };
+    }
+
+    // Perform the update in the database using the updateQuery
+    // await Question.updateOne({ _id: questionId }, updateQuery);
+    await Question.findByIdAndUpdate(questionId, updateQuery, { new: true });
+
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
   }
 }

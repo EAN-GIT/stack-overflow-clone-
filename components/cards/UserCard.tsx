@@ -18,6 +18,11 @@ const UserCard = async ({ user }: Props) => {
   const interactedTags = await getTopInteractedtags({ userId: user._id });
 
   console.log(interactedTags);
+  // const interactedTags = await getTopInteractedtags({ userId: user._id })
+
+  // const result = await getTopInteractedtags({ userId: user._id });
+
+  // console.log(result);
 
   return (
     <Link
@@ -53,6 +58,7 @@ const UserCard = async ({ user }: Props) => {
             <Badge>No tags yet</Badge>
           )}
         </div>
+      
       </article>
     </Link>
   );
