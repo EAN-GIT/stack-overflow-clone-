@@ -54,7 +54,7 @@ export const Answer = ({ question, questionId, authorId }: Props) => {
       // clear form content prepping for new answer to be types
       form.reset();
 
-      // reset editor
+      // reset editor editor ref.current....meaning if something is in the editor
       if (editorRef.current) {
         const editor = editorRef.current as any;
 
@@ -84,7 +84,7 @@ export const Answer = ({ question, questionId, authorId }: Props) => {
            */}
 
           <Image
-            src="/assets/icons/starts.svg"
+            src="/assets/icons/stars.svg"
             alt="star"
             width={12}
             height={12}
