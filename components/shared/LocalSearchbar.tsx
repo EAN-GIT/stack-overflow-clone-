@@ -27,7 +27,7 @@ const LocalSearchbar = ({
         {iconPosition === "left" && (
           <Image
             src={imgSrc}
-            alt="seacrhIcon"
+            alt="Search Icon"
             width={24}
             height={24}
             className="cursor-pointer"
@@ -43,7 +43,7 @@ const LocalSearchbar = ({
         {iconPosition === "right" && (
           <Image
             src="/assets/icons/search.svg"
-            alt="seacrhIcon"
+            alt="Search Icon"
             width={24}
             height={24}
             className="cursor-pointer"
