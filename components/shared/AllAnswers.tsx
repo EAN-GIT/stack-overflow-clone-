@@ -6,8 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Filter from "./Filter";
 import { getAllAnswers } from "@/lib/actions/answer.action";
+import Votes from "./Votes";
+// import Votes from "./Votes";
 
-// lib/actions/answer.action.ts
 interface Props {
   questionId: string;
   totalAnswers: number;
@@ -61,7 +62,17 @@ const AllAnswers = async ({
                     </p>
                   </div>
                 </Link>
-                <div className="flex justify-end">VOTING</div>
+                <div className="flex justify-end">
+                  <Votes
+                    type="Answer"
+                    userId={JSON.stringify(answer._id)}
+                    itemId={JSON.stringify(userId)}
+                    downvotes={answer.downvotes.length}
+                    upvotes={answer.upvotes.length}
+                    hasupVoted={answer.upvotes.includes(userId)}
+                    hasdownVoted={answer.downvotes.includes(userId)}
+                  />
+                </div>
               </div>
             </div>
             <ParseHtml data={answer.content} />
