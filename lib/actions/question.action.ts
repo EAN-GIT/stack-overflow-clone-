@@ -7,10 +7,20 @@ import Tag from "@/models/tag.model";
 import {
   GetQuestionByIdParams,
   GetQuestionsParams,
+  GetSavedQuestionsParams,
   QuestionVoteParams,
 } from "./shared";
 import User from "@/models/user.model";
 import { revalidatePath } from "next/cache";
+
+// export async function getQuestionbyId(params: GetQuestionByIdParams) {
+//   try {
+//     connectToDatabase();
+
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 export async function getQuestionbyId(params: GetQuestionByIdParams) {
   try {

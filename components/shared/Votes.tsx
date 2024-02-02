@@ -1,3 +1,4 @@
+"use client";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 import {
   // eslint-disable-next-line no-unused-vars
@@ -32,7 +33,6 @@ const Votes = ({
   hasSaved,
 }: Props) => {
   const pathname = usePathname();
-
   async function handleVote(action: string) {
     if (!userId) {
       return;
@@ -85,8 +85,8 @@ const Votes = ({
 
   async function handleSave() {
     await toggleSaveQuestion({
-      userId: JSON.stringify(userId),
-      questionId: JSON.stringify(itemId),
+      userId: JSON.parse(userId),
+      questionId: JSON.parse(itemId),
       path: pathname,
     });
   }
@@ -114,7 +114,7 @@ const Votes = ({
             </p>
           </div>
         </div>
-
+        {/* // downvote image  */}
         <div className="flex-center gap-1.5">
           <Image
             src={
@@ -136,7 +136,7 @@ const Votes = ({
           </div>
         </div>
       </div>
-
+      {/* save icon */}
       {type === "Question" && (
         <Image
           src={

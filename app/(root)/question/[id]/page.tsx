@@ -8,7 +8,7 @@ import Votes from "@/components/shared/Votes";
 import { getQuestionbyId } from "@/lib/actions/question.action";
 import { getUserId } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
-import { Answer } from "@/models/answer.model";
+// import Answer from "@/models/answer.model";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,10 +16,6 @@ import React from "react";
 
 const Page = async ({ params, searchParams }: any) => {
   const { id } = params;
-
-  // make call to questions action to fetch detila by id
-
-  const result = await getQuestionbyId({ questionId: id });
 
   const { userId: clerkId } = auth();
 
@@ -109,7 +105,7 @@ const Page = async ({ params, searchParams }: any) => {
 
       <AllAnswers
         questionId={result._id}
-        userId={JSON.stringify(mongoUser._id)}
+        userId={mongoUser._id}
         totalAnswers={result.answers.length}
       />
 

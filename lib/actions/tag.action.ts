@@ -8,10 +8,6 @@ export async function getTopInteractedtags(params: GetTopInteractedTagsParams) {
   try {
     connectToDatabase();
 
-export async function getTopInteractedtags(params: GetTopInteractedTagsParams) {
-  try {
-    connectToDatabase();
-
     const { userId } = params;
 
     const user = await User.findById(userId);
@@ -26,7 +22,6 @@ export async function getTopInteractedtags(params: GetTopInteractedTagsParams) {
       { _id: "1", name: "tag" },
       { _id: "2", name: "tag2" },
     ];
-    
   } catch (error) {
     return { error: "An unexpected error occurred" };
   }
