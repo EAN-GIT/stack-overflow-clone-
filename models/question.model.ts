@@ -2,7 +2,7 @@
 import { models, Schema, Document, model } from "mongoose";
 
 // 1. Create an interface representing a document in MongoDB.
-interface IQuestion extends Document {
+export interface IQuestion extends Document {
   title: string;
   content: string;
   tags: Schema.Types.ObjectId[];
