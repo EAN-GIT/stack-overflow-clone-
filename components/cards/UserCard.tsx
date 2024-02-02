@@ -58,7 +58,6 @@ const UserCard = async ({ user }: Props) => {
             <Badge>No tags yet</Badge>
           )}
         </div>
-      
       </article>
     </Link>
   );
