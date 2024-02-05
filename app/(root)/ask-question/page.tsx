@@ -21,7 +21,6 @@ const Page = async () => {
       <h1 className="h1-bold text-dark100_light900">Ask a Question</h1>
       <div className="mt-9">
         <QuestionForm mongoUserId={JSON.stringify(mongoUser)} />
-        {/* // Todo:This might be the key to fioxng my btn problem...look it up  button now works but doesnt just add question on sub,it*/}
       </div>
     </div>
   );

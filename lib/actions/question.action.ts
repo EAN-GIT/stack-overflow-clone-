@@ -6,6 +6,7 @@ import { connectToDatabase } from "../mongoose";
 import Tag from "@/models/tag.model";
 import {
   DeleteQuestionParams,
+  EditQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
   QuestionVoteParams,
@@ -164,7 +165,7 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
 
     const { questionId, path } = params;
     // find question by id and delete
-   
+
     // Delete the Question document directly by its ID
     await Question.deleteOne({ id: questionId });
 
@@ -180,6 +181,29 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
       { $pull: { question: questionId } },
     );
     revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function editQuestion(params: EditQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, path, content, title } = params;
+
+    const editedQuestion = await Question.findByIdAndUpdate(
+      questionId,
+      { content, title },
+      { new: true },
+    );
+    if (!editedQuestion) {
+      throw new Error("Question not found");
+    }
+
+    revalidatePath(path);
+
+    return editedQuestion;
   } catch (error) {
     throw error;
   }
