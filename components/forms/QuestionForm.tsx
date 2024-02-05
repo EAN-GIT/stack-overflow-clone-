@@ -295,4 +295,3 @@ const QuestionForm = ({ mongoUserId, questionDetails, type }: Props) => {
 };
 
 export default QuestionForm;
-
