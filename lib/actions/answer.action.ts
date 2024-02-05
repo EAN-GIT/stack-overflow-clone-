@@ -7,10 +7,13 @@ import { connectToDatabase } from "../mongoose";
 import {
   AnswerVoteParams,
   CreateAnswerParams,
+  DeleteAnswerParams,
   GetAnswersParams,
 } from "./shared";
 import { Question } from "@/models/question.model";
 import { revalidatePath } from "next/cache";
+import Interaction from "@/models/interaction.model";
+import Tag from "@/models/tag.model";
 // import { User } from "lucide-react";
 
 export async function createAnswer(params: CreateAnswerParams) {
@@ -113,6 +116,41 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
     const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
       new: true,
     });
+
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteAnswer(params: DeleteAnswerParams) {
+  try {
+    connectToDatabase();
+
+    const { answerId, path } = params;
+
+    // Find the answer document in the database using its ID
+    const answer = await Answer.findById(answerId);
+
+    // If the answer doesn't exist, throw an error
+    if (!answer) {
+      throw new Error("Answer not found");
+    }
+
+    // Delete the found answer document
+    await answer.deleteOne({ id: answerId });
+
+    // Update related Question documents by removing the answerId
+    await Question.updateMany(
+      { _id: answer.question },
+      { $pull: { answer: answerId } },
+    );
+
+    // Delete related Interaction documents
+    await Interaction.deleteMany({ answer: answerId });
+
+    // Revalidate something (likely a path or cache)
+    revalidatePath(path);
 
     revalidatePath(path);
   } catch (error) {
