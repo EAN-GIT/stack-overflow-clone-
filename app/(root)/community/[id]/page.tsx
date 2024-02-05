@@ -1,20 +1,23 @@
-import AnswersTab from "@/components/shared/AnswersTab";
-import ProfileLink from "@/components/shared/ProfileLink";
-import QuestionTab from "@/components/shared/QuestionTab";
-import Stats from "@/components/shared/Stats";
-import { Button } from "@/components/ui/button";
 import { getUserInfo } from "@/lib/actions/user.action";
-import { getJoinedDate } from "@/lib/utils";
 import { URLProps } from "@/types";
 import { SignedIn, auth } from "@clerk/nextjs";
+import React from "react";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { Button } from "@/components/ui/button";
+import { getJoinedDate } from "@/lib/utils";
+import ProfileLink from "@/components/shared/ProfileLink";
+import Stats from "@/components/shared/Stats";
+import QuestionTab from "@/components/shared/QuestionTab";
+import AnswersTab from "@/components/shared/AnswersTab";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
+
   const userInfo = await getUserInfo({ userId: params.id });
+
   return (
     <>
       <div className="flex flex-col-reverse items-start justify-between sm:flex-row">
