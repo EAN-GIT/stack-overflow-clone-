@@ -4,11 +4,12 @@ import React from "react";
 import { sidebarLinks } from "@/constants";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { SignedOut } from "@clerk/nextjs";
+import { SignedOut, useAuth } from "@clerk/nextjs";
 import { Button } from "../../ui/button";
 
 const LeftSidebar = () => {
   const pathName = usePathname();
+  const { userId } = useAuth();
   return (
     <section
       className="background-light900_dark200 light-border
@@ -19,6 +20,14 @@ const LeftSidebar = () => {
           const isActive =
             (pathName.includes(item.route) && item.route.length > 1) ||
             pathName === item.route;
+
+          if (item.route === "/profile") {
+            if (userId) {
+              item.route = `${item.route}/${userId}`;
+            } else {
+              return null;
+            }
+          }
 
           // TODO
           return (

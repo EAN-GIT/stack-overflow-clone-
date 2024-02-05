@@ -5,13 +5,16 @@ import { Question } from "@/models/question.model";
 import { connectToDatabase } from "../mongoose";
 import Tag from "@/models/tag.model";
 import {
+  DeleteQuestionParams,
+  EditQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
-  GetSavedQuestionsParams,
   QuestionVoteParams,
 } from "./shared";
 import User from "@/models/user.model";
 import { revalidatePath } from "next/cache";
+import Answer from "@/models/answer.model";
+import Interaction from "@/models/interaction.model";
 
 // export async function getQuestionbyId(params: GetQuestionByIdParams) {
 //   try {
@@ -151,6 +154,56 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
     await Question.findByIdAndUpdate(questionId, updateQuery, { new: true });
 
     revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteQuestion(params: DeleteQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, path } = params;
+    // find question by id and delete
+
+    // Delete the Question document directly by its ID
+    await Question.deleteOne({ id: questionId });
+
+    // Delete all related Answer documents based on the questionId
+    await Answer.deleteMany({ question: questionId });
+
+    // Delete related Interaction documents based on the questionId
+    await Interaction.deleteMany({ question: questionId });
+
+    // Update related Tag documents by removing the questionId
+    await Tag.updateMany(
+      { question: questionId },
+      { $pull: { question: questionId } },
+    );
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function editQuestion(params: EditQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, path, content, title } = params;
+
+    const editedQuestion = await Question.findByIdAndUpdate(
+      questionId,
+      { content, title },
+      { new: true },
+    );
+    if (!editedQuestion) {
+      throw new Error("Question not found");
+    }
+
+    revalidatePath(path);
+
+    return editedQuestion;
   } catch (error) {
     throw error;
   }
