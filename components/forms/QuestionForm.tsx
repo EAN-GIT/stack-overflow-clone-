@@ -45,16 +45,16 @@ const QuestionForm = ({ mongoUserId, questionDetails, type }: Props) => {
   // state to handle submit action
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const parsedQuestionDetails = JSON.parse(questionDetails || "");
+  const parsedQuestionDetails = questionDetails && JSON.parse(questionDetails || "");
 
-  const groupedTags = parsedQuestionDetails.tags.map((tag) => tag.name);
+  const groupedTags = parsedQuestionDetails?.tags.map((tag) => tag.name);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
-      title: parsedQuestionDetails.title || "",
-      explanation: parsedQuestionDetails.content || "",
+      title: parsedQuestionDetails?.title || "",
+      explanation: parsedQuestionDetails?.content || "",
       tags: groupedTags || [],
     },
   });
@@ -209,7 +209,7 @@ const QuestionForm = ({ mongoUserId, questionDetails, type }: Props) => {
                         ),
                       ),
                   }}
-                  initialValue={parsedQuestionDetails.content}
+                  initialValue={parsedQuestionDetails?.content}
                 />
                 {/* ); */}
               </FormControl>
