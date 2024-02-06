@@ -49,7 +49,7 @@ const QuestionForm = ({ mongoUserId, questionDetails, type }: Props) => {
 
   const groupedTags = parsedQuestionDetails.tags.map((tag) => tag.name);
 
-  //   // 1. Define your form.
+  // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
     defaultValues: {
