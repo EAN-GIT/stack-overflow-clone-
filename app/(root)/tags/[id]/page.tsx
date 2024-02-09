@@ -21,7 +21,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
 
       <div className="mt-11 w-full">
         <LocalSearchbar
-          route="/"
+          route={`/tags/${params.id}`}
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
           placeHolder="Search tag questions"
@@ -41,7 +41,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
               upvotes={question.upvotes}
               views={question.views}
               answers={question.answers}
-              createdAt={question.createdDate}
+              createdAt={question.createdAt}
             />
           ))
         ) : (

@@ -7,7 +7,7 @@ export interface IQuestion extends Document {
   content: string;
   tags: Schema.Types.ObjectId[];
   author: Schema.Types.ObjectId; // reference to the user who owns the todo
-  createdDate: Date;
+  createdAt: Date;
   answers: Schema.Types.ObjectId[];
   upvotes: Schema.Types.ObjectId[];
   downvotes: Schema.Types.ObjectId[];
@@ -20,7 +20,7 @@ const questionSchema = new Schema<IQuestion>({
   content: { type: String, required: true },
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag", required: true }],
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  createdDate: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now() },
   views: { type: Number, default: 0 },
   answers: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
   upvotes: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
