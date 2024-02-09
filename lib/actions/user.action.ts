@@ -15,7 +15,6 @@ import {
 } from "./shared";
 import { revalidatePath } from "next/cache";
 import { FilterQuery, Query, model } from "mongoose";
-import path from "path";
 import Tag from "@/models/tag.model";
 import Answer from "@/models/answer.model";
 import { Question } from "@/models/question.model";
@@ -24,14 +23,23 @@ export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDatabase();
 
-    // const {page =1 ,pageSize =20,filter,searchQuery} = params;
+    const { searchQuery } = params;
 
-    const users = await User.find({});
-    // .sort({createdAt:-1})
+    const query: FilterQuery<typeof User> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { name: { $regex: new RegExp(searchQuery, "i") } },
+        { username: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    const users = await User.find(query).sort({ createdAt: -1 });
 
     return { users };
   } catch (error) {
-    return { error: "An unexpected error occurred" };
+    console.log(error);
+    throw error;
   }
 }
 

@@ -8,10 +8,13 @@ import HomeFilters from "@/components/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
 import QuestionsCard from "@/components/cards/QuestionsCard";
 import { getQuestions } from "@/lib/actions/question.action";
+import { SearchParamsProps } from "@/types";
 
-const Home = async () => {
-  // call the get all question server action
-  const result = await getQuestions({});
+const Home = async ({ searchParams }: SearchParamsProps) => {
+  // get questions by user search imput
+  const result = await getQuestions({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>

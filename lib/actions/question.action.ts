@@ -15,6 +15,7 @@ import User from "@/models/user.model";
 import { revalidatePath } from "next/cache";
 import Answer from "@/models/answer.model";
 import Interaction from "@/models/interaction.model";
+import { FilterQuery } from "mongoose";
 
 // export async function getQuestionbyId(params: GetQuestionByIdParams) {
 //   try {
@@ -46,17 +47,31 @@ export async function getQuestionbyId(params: GetQuestionByIdParams) {
 }
 
 export async function getQuestions(params: GetQuestionsParams) {
-  connectToDatabase();
+  try {
+    connectToDatabase();
 
-  // get all questions
-  const questions = await Question.find({})
-    .populate({ path: "tags", model: Tag })
-    .populate({ path: "author", model: User })
-    .sort({ createdAt: -1 });
+    const { searchQuery } = params;
 
-  return { questions };
+    const query: FilterQuery<typeof Question> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    const questions = await Question.find(query)
+      .populate({ path: "tags", model: Tag })
+      .populate({ path: "author", model: User })
+      .sort({ createdAt: -1 });
+
+    return { questions };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
-
 // handke creating questions
 export async function createQuestion(params: any) {
   try {
