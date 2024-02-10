@@ -14,8 +14,10 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
   // get questions by user search imput
   const result = await getQuestions({
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
 
+  // Fetch Recommended Questions
   return (
     <>
       <div className="flex w-full  flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center  ">
