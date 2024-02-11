@@ -14,7 +14,7 @@ interface Props {
   totalAnswers: number;
   userId: string;
   page?: number;
-  filter?: number;
+  filter?: string;
 }
 const AllAnswers = async ({
   questionId,
@@ -26,6 +26,8 @@ const AllAnswers = async ({
   // fetch al answers
   const result = await getAllAnswers({
     questionId,
+    page: page ? +page : 1,
+    sortBy: filter,
   });
 
   return (

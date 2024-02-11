@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/select";
 
 import { SelectGroup } from "@radix-ui/react-select";
+import { useRouter, useSearchParams } from "next/navigation";
+import { formUrlQuery } from "@/lib/utils";
 
 interface Props {
   filters: { name: string; value: string }[];
@@ -24,9 +26,26 @@ const Filter = ({
   containerClasses,
   placeholder,
 }: Props) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const paramsfilter = searchParams.get("filter");
+
+  function handleTypeClick(value: string) {
+    const newUrl = formUrlQuery({
+      params: searchParams.toString(),
+      key: "filter",
+      value,
+    });
+    router.push(newUrl, { scroll: false });
+  }
+
   return (
     <div className={`relative ${containerClasses}`}>
-      <Select>
+      <Select
+        onValueChange={handleTypeClick}
+        defaultValue={paramsfilter || undefined}
+      >
         <SelectTrigger
           className={`${otherClasses} body-regular light-border 
       background-light800_dark300 text-dark500_light700 px-5 py-2.5`}

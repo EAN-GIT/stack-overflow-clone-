@@ -15,7 +15,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
   if (!userId) return null;
   const result = await getSavedQuestions({
     clerkId: userId,
-
+    filter: searchParams.filter,
     searchQuery: searchParams.q,
   });
 
