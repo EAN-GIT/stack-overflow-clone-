@@ -109,7 +109,6 @@ const Page = async ({ params, searchParams }: any) => {
         totalAnswers={result.answers.length}
         page={searchParams?.page}
         filter={searchParams?.filter}
-
       />
 
       {/* <Answer

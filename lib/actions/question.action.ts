@@ -50,7 +50,7 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page = 1, pageSize = 2 } = params;
 
     const query: FilterQuery<typeof Question> = {};
 
@@ -60,6 +60,8 @@ export async function getQuestions(params: GetQuestionsParams) {
         { content: { $regex: new RegExp(searchQuery, "i") } },
       ];
     }
+    // amount to skip....to calculate the number of posts(items) to skip based on the page size and number
+    const skipAmount = (page - 1) * pageSize;
 
     let sortOptions = {};
 
@@ -80,9 +82,17 @@ export async function getQuestions(params: GetQuestionsParams) {
     const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort(sortOptions);
 
-    return { questions };
+    //  to know the total number of questions we have
+    const totalQuestions = await Question.countDocuments(query);
+    // so that we can determine if a next page exist to use to make the next button abled
+    const isNext = totalQuestions > skipAmount + questions.length; // question.length here i sthe n0 of question for the current page
+    //  skip amount ..no of question we've alrready skipped
+
+    return { questions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
