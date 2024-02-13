@@ -56,7 +56,7 @@ const ProfileForm = ({ user, clerkId }: Props) => {
           username: values.username,
           bio: values.bio,
           location: values.location,
-          portfolioWebsite: values.portfolioWebsite
+          portfolioWebsite: values.portfolioWebsite,
         },
         path: pathname,
       });
@@ -136,7 +136,7 @@ const ProfileForm = ({ user, clerkId }: Props) => {
                   {...field}
                 />
               </FormControl>
-            
+
               <FormMessage />
             </FormItem>
           )}

@@ -1,4 +1,4 @@
-import LocalSearchbar from "@/components/shared/LocalSearchbar";
+import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
