@@ -45,7 +45,8 @@ const QuestionForm = ({ mongoUserId, questionDetails, type }: Props) => {
   // state to handle submit action
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const parsedQuestionDetails = questionDetails && JSON.parse(questionDetails || "");
+  const parsedQuestionDetails =
+    questionDetails && JSON.parse(questionDetails || "");
 
   const groupedTags = parsedQuestionDetails?.tags.map((tag) => tag.name);
 

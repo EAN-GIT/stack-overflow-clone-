@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import Image from "next/image";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
@@ -49,7 +49,7 @@ const LocalSearchbar = ({
       }
     }, 500);
     return () => clearTimeout(delayDebounceFn);
-  }, [search, route, pathname, router, query, searchParams]);
+  }, [search, pathname, router, query, searchParams]);
 
   return (
     <>
