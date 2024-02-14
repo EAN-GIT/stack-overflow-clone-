@@ -288,7 +288,7 @@ export async function getUserQuestions(params: GetUserStatsParams) {
 
     // get al questions asked  by a user
     const userQuestions = await Question.find({ author: userId })
-      .sort({ views: -1, upvotes: -1 })
+      .sort({ createdAt: -1, views: -1, upvotes: -1 })
       .skip(skipAmount)
       .limit(pageSize)
       .populate("tags", "_id name")
