@@ -2,6 +2,9 @@ import { Question } from "@/models/question.model";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import qs from "query-string";
+import { BADGE_CRITERIA } from "@/constants";
+import { BadgeCounts } from "@/types";
+import { any } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -108,4 +111,40 @@ export const removeKeysFromQuery = ({
     },
     { skipNull: true },
   );
+};
+
+interface BadgeParam {
+  criteria: { type: keyof typeof BADGE_CRITERIA; count: number }[];
+}
+
+export const assignBadges = (params: BadgeParam) => {
+  // Initialize badgeCounts object to keep track of badge counts for each level
+  const badgeCounts: BadgeCounts = {
+    GOLD: 0,
+    SILVER: 0,
+    BRONZE: 0,
+  };
+
+  const { criteria } = params;
+
+  // Iterate over each criterion
+  criteria.forEach((criterion) => {
+    // Destructure type and count from the criterion
+    const { type, count } = criterion;
+
+    // Get badge levels and their corresponding thresholds from BADGE_CRITERIA
+    const badgeLevels: any = BADGE_CRITERIA[type];
+
+    // Iterate over each badge level
+    Object.keys(badgeLevels).forEach((level: any) => {
+      // Check if the count meets the threshold for the current badge level
+      if (count >= badgeLevels[level]) {
+        // Increment the count for the corresponding badge level in badgeCounts
+        badgeCounts[level as keyof BadgeCounts] += 1;
+      }
+    });
+  });
+
+  // Return the badgeCounts object containing counts for each badge level
+  return badgeCounts;
 };
