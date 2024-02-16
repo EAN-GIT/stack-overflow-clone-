@@ -15,7 +15,6 @@ import Link from "next/link";
 import React from "react";
 
 const Page = async ({ params, searchParams }: any) => {
-  const { id } = params;
 
   const { userId: clerkId } = auth();
 
