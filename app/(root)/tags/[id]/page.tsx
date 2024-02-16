@@ -1,11 +1,11 @@
 import { URLProps } from "@/types";
 import React from "react";
-import LocalSearchbar from "@/components/shared/LocalSearchbar";
 import NoResult from "@/components/shared/NoResult";
 import QuestionsCard from "@/components/cards/QuestionsCard";
 import { IQuestion } from "@/models/question.model";
 import { getQuestionsByTagId } from "@/lib/actions/tag.action";
 import Pagination from "@/components/shared/Pagination";
+import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({
