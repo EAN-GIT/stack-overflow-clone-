@@ -1,4 +1,3 @@
-import LocalSearchbar from "@/components/shared/LocalSearchbar";
 import React from "react";
 import Filter from "../../../components/shared/Filter";
 import { QuestionFilters } from "@/constants/filters";
@@ -8,6 +7,7 @@ import { auth } from "@clerk/nextjs";
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
+import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
   const { userId } = auth();

@@ -31,6 +31,8 @@ export const Answer = ({ question, questionId, authorId }: Props) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [isSubmittingAi, setIsSubmittingAi] = useState(false);
+
   const editorRef = useRef(null);
   // decclare a useform
   const form = useForm<z.infer<typeof AnswerSchema>>({
@@ -68,6 +70,47 @@ export const Answer = ({ question, questionId, authorId }: Props) => {
       setIsSubmitting(false);
     }
   };
+  const generateAiAnswer = async () => {
+    // Check if authorId exists
+    if (!authorId) return;
+
+    // Set a flag to indicate that AI answer submission is in progress
+    setIsSubmittingAi(true);
+
+    try {
+      // Make an API call to the server using fetch
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
+        {
+          method: "POST",
+          // Send the question in JSON format in the request body
+          body: JSON.stringify({ question }),
+        },
+      );
+
+      // Parse the response as JSON
+      const aiAnswer = await response.json();
+
+      // convert plain text to Html format
+      // const formattedAnswer = aiAnswer.replace(/\n/g, "<br/>");
+
+      // if (editorRef.current) {
+      //   const editor = editorRef.current as any;
+      //   editor.setContent(formattedAnswer);
+      // }
+
+      // Display a message informing the user about the feature limitation
+      alert(
+        "Sorry!...You have to upgrade to Premium 🚀 for this feature to work 🧐",
+      );
+      // Toast
+    } catch (error) {
+      throw Error;
+    } finally {
+      // Set the flag to indicate that AI answer submission has completed
+      setIsSubmittingAi(false);
+    }
+  };
 
   return (
     <>
@@ -77,19 +120,23 @@ export const Answer = ({ question, questionId, authorId }: Props) => {
         </h4>
 
         <Button
-          onClick={() => {}}
+          onClick={generateAiAnswer}
           className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none"
         >
-          {/* generate an ai answer
-           */}
-
-          <Image
-            src="/assets/icons/stars.svg"
-            alt="star"
-            width={12}
-            height={12}
-            className="object-contain"
-          />
+          {isSubmittingAi ? (
+            <>Generating...</>
+          ) : (
+            <>
+              <Image
+                src="/assets/icons/stars.svg"
+                alt="star"
+                width={12}
+                height={12}
+                className="object-contain"
+              />
+              Generate an AI answer
+            </>
+          )}
         </Button>
       </div>
       <Form {...form}>
