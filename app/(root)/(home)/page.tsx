@@ -10,7 +10,11 @@ import QuestionsCard from "@/components/cards/QuestionsCard";
 import { getQuestions } from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
-import Loading from "./loading";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | DevOverFlow",
+};
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
   // get questions by user search imput

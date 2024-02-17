@@ -13,6 +13,7 @@
   ],
   "plugins": ["tailwindcss", "prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "no-trailing-spaces": "error" // Ensure no trailing spaces
   }
 }
