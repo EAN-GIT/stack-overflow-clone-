@@ -14,6 +14,7 @@ interface QuestionProps {
     name: string;
   }[];
   author: {
+    clerkId: string;
     _id: string;
     name: string;
     picture: string;
@@ -65,24 +66,17 @@ const QuestionsCard = ({
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
-        {/* <Metric
-           imgUrl={author.picture}
-          alt="user"
-          value={author.name}
-          title={` - asked ${getTimestamp(createdAt)}`}
-          href= {`/profile/${author._id}`}
-          isAuthor
-          textStyles="body-medium text-dark400_light700"
-        /> */}
-        {/* {author && (
-    <Metric
-      imgUrl={author.picture}
-      alt="user"
-      value={author.name}
-      title={` - asked ${getTimestamp(createdAt)}`}
-    />
-  )} */}
-
+        <div>
+          <Metric
+            imgUrl={author.picture}
+            alt="user"
+            value={author.name}
+            title={` • asked ${getTimestamp(createdAt)}`}
+            href={`/profile/${clerkId}`}
+            isAuthor
+            textStyles="body-medium text-dark400_light700"
+          />
+        </div>
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
           <Metric
             imgUrl="/assets/icons/like.svg"
@@ -95,14 +89,14 @@ const QuestionsCard = ({
             imgUrl="/assets/icons/message.svg"
             alt="message"
             value={formatAndDivideNumber(answers.length)}
-            title=" Answers"
+            title="Answer"
             textStyles="small-medium text-dark400_light800"
           />
           <Metric
             imgUrl="/assets/icons/eye.svg"
             alt="eye"
             value={formatAndDivideNumber(views)}
-            title=" Views"
+            title="Views"
             textStyles="small-medium text-dark400_light800"
           />
         </div>

@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import React, { useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 // Import dotenv to load environment variables from a .env file
@@ -48,7 +48,7 @@ const QuestionForm = ({ mongoUserId, questionDetails, type }: Props) => {
   const parsedQuestionDetails =
     questionDetails && JSON.parse(questionDetails || "");
 
-  const groupedTags = parsedQuestionDetails?.tags.map((tag) => tag.name);
+  const groupedTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({

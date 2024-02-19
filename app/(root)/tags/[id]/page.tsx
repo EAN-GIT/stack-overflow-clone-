@@ -2,7 +2,6 @@ import { URLProps } from "@/types";
 import React from "react";
 import NoResult from "@/components/shared/NoResult";
 import QuestionsCard from "@/components/cards/QuestionsCard";
-import { IQuestion } from "@/models/question.model";
 import { getQuestionsByTagId } from "@/lib/actions/tag.action";
 import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
@@ -11,7 +10,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({
     tagId: params.id,
     searchQuery: searchParams.q,
-    page: searchParams.page,
+    page: searchParams?.page ? +searchParams.page : 1,
   });
 
   console.log(result);
@@ -32,7 +31,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {result.questions.length > 0 ? (
-          result.questions.map((question: IQuestion) => (
+          result.questions.map((question: any) => (
             <QuestionsCard
               key={question._id}
               _id={question._id}

@@ -86,7 +86,7 @@ const ProfileForm = ({ user, clerkId }: Props) => {
               </FormLabel>
               <FormControl>
                 <Input
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
                   placeholder="Type your name here"
                   {...field}
                 />
@@ -107,7 +107,7 @@ const ProfileForm = ({ user, clerkId }: Props) => {
               </FormLabel>
               <FormControl>
                 <Input
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
                   placeholder="Username goes here"
                   {...field}
                 />
@@ -130,7 +130,7 @@ const ProfileForm = ({ user, clerkId }: Props) => {
               </FormLabel>
               <FormControl>
                 <Input
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
                   type="url"
                   placeholder="Portfolio Link"
                   {...field}
@@ -153,7 +153,7 @@ const ProfileForm = ({ user, clerkId }: Props) => {
               </FormLabel>
               <FormControl>
                 <Input
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
                   placeholder="Enugu,Nigeria"
                   {...field}
                 />
@@ -177,7 +177,7 @@ const ProfileForm = ({ user, clerkId }: Props) => {
                 <Textarea
                   placeholder="Launch your development career with project-based coaching - showcase your skills with practical development experience and land the 
                   coding career of your dreams. Check out jsmastery.pro to learn more."
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
                   {...field}
                 />
               </FormControl>
