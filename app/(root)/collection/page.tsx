@@ -18,7 +18,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
     clerkId: userId,
     filter: searchParams.filter,
     searchQuery: searchParams.q,
-    page: searchParams.page,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
@@ -45,7 +45,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
       <div className="mt-10 flex w-full flex-col gap-6">
         {result.questions.length > 0 ? (
           // Loop over the saved questions array and render the QuestionCard component
-          result.questions.map((question) => (
+          result.questions.map((question: any) => (
             <QuestionsCard
               key={question._id}
               _id={question._id}

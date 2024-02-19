@@ -74,6 +74,7 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
       <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
+          // @ts-ignore
           isNext={result?.isNext}
         />
       </div>

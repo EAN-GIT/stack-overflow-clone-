@@ -7,24 +7,47 @@ import { HomePageFilters } from "@/constants/filters";
 import HomeFilters from "@/components/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
 import QuestionsCard from "@/components/cards/QuestionsCard";
-import { getQuestions } from "@/lib/actions/question.action";
+import {
+  getQuestions,
+  getRecommendedQuestions,
+} from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
 import { Metadata } from "next";
+import { auth } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Home | DevOverFlow",
 };
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
-  // get questions by user search imput
-  const result = await getQuestions({
-    searchQuery: searchParams.q,
-    filter: searchParams.filter,
-    page: searchParams.page ? +searchParams.page : 1,
-  });
+  const { userId: clerkId } = auth();
 
-  // Fetch Recommended Questions
+  let result;
+
+  if (searchParams?.filter === "recommended") {
+    if (clerkId) {
+      // Fetch Recommended Questions
+      result = await getRecommendedQuestions({
+        userId: clerkId,
+        searchQuery: searchParams.q,
+        page: searchParams.page ? +searchParams.page : 1,
+      });
+    } else {
+      result = {
+        questions: [],
+        isNext: false,
+      };
+    }
+  } else {
+    // get questions by user search imput
+    result = await getQuestions({
+      searchQuery: searchParams.q,
+      filter: searchParams.filter,
+      page: searchParams.page ? +searchParams.page : 1,
+    });
+  }
+
   return (
     <>
       <div className="flex w-full  flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center  ">
@@ -60,34 +83,38 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
 
       {/* queston tag  goes here */}
       <div className="mt-10 flex w-full flex-col gap-6">
-        {result.questions.length > 0 ? (
-          // Loop over the questions array and render the QuestionCard component
-          result.questions.map((question) => (
-            <QuestionsCard
-              key={question._id}
-              _id={question._id}
-              title={question.title}
-              tags={question.tags}
-              author={question.author}
-              upvotes={question.upvotes}
-              views={question.views}
-              answers={question.answers}
-              createdAt={question.createdAt}
+        {
+          //  @ts-ignore
+          result?.questions.length > 0 ? (
+            // Loop over the questions array and render the QuestionCard component
+            result?.questions.map((question) => (
+              <QuestionsCard
+                key={question._id}
+                _id={question._id}
+                title={question.title}
+                tags={question.tags}
+                author={question.author}
+                upvotes={question.upvotes}
+                views={question.views}
+                answers={question.answers}
+                createdAt={question.createdAt}
+              />
+            ))
+          ) : (
+            <NoResult
+              link="/"
+              description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. Your query could be the next big thing others learn from. Get involved! 💡"
+              title="There’s no question to show"
+              linkTitle="Ask a Question"
             />
-          ))
-        ) : (
-          <NoResult
-            link="/"
-            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. Your query could be the next big thing others learn from. Get involved! 💡"
-            title="There’s no question to show"
-            linkTitle="Ask a Question"
-          />
-        )}
+          )
+        }
       </div>
       <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
-          isNext={result.isNext}
+          // @ts-ignore
+          isNext={result?.isNext}
         />
       </div>
     </>
