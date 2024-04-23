@@ -49,13 +49,13 @@ const Page = async ({ params, searchParams }: any) => {
           <div className="flex justify-end">
             <Votes
               type="Question"
-              userId={JSON.stringify(mongoUser._id)}
+              userId={JSON.stringify(mongoUser)}
               itemId={JSON.stringify(result._id)}
               downvotes={result.downvotes.length}
               upvotes={result.upvotes.length}
-              hasupVoted={result.upvotes.includes(mongoUser._id)}
-              hasdownVoted={result.downvotes.includes(mongoUser._id)}
-              hasSaved={mongoUser?.saved.includes(result._id)}
+              hasupVoted={result.upvotes.includes(mongoUser)}
+              hasdownVoted={result.downvotes.includes(mongoUser)}
+              hasSaved={mongoUser?.saved.includes(result.id)}
             />
           </div>
         </div>
@@ -68,8 +68,8 @@ const Page = async ({ params, searchParams }: any) => {
         <Metric
           imgUrl="/assets/icons/clock.svg"
           alt="clock icon"
-          value={` asked ${getTimestamp(result.createdAt)}`}
-          title=" Asked"
+          value={` ${getTimestamp(result.createdAt)}`}
+          title="Asked"
           textStyles="small-medium text-dark400_light800"
         />
         <Metric
@@ -103,7 +103,7 @@ const Page = async ({ params, searchParams }: any) => {
 
       <AllAnswers
         questionId={result._id}
-        userId={mongoUser._id}
+        userId={mongoUser}
         totalAnswers={result.answers.length}
         page={searchParams?.page}
         filter={searchParams?.filter}
@@ -117,7 +117,7 @@ const Page = async ({ params, searchParams }: any) => {
       <Answer
         question={result.content}
         questionId={JSON.stringify(result._id)}
-        authorId={JSON.stringify(mongoUser._id)}
+        authorId={JSON.stringify(mongoUser)}
       />
     </div>
   );

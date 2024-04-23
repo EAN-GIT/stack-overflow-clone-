@@ -1,5 +1,6 @@
 // > tailwind.config
 
+// eslint-disable-next-line no-unused-vars
 import tailwindcssAnimate from "tailwindcss-animate";
 
 /** @type {import('tailwindcss').Config} */
