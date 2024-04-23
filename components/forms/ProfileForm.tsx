@@ -175,7 +175,7 @@ const ProfileForm = ({ user, clerkId }: Props) => {
               </FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Launch your development career with project-based coaching - showcase your skills with practical development experience and land the 
+                  placeholder="Launch your development career with project-based coaching - showcase your skills with practical development experience and land the
                   coding career of your dreams. Check out jsmastery.pro to learn more."
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
                   {...field}

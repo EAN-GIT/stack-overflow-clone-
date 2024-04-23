@@ -1,5 +1,5 @@
 "use client";
-import React, {  useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Form,
   FormControl,
@@ -89,7 +89,7 @@ export const Answer = ({ question, questionId, authorId }: Props) => {
       );
 
       // Parse the response as JSON
-      const aiAnswer = await response.json();
+      // const aiAnswer = await response.json();
 
       // convert plain text to Html format
       // const formattedAnswer = aiAnswer.replace(/\n/g, "<br/>");
