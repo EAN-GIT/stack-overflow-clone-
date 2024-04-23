@@ -41,6 +41,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
     }
   } else {
     // get questions by user search imput
+    
     result = await getQuestions({
       searchQuery: searchParams.q,
       filter: searchParams.filter,
