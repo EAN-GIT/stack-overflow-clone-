@@ -88,6 +88,8 @@ export const Answer = ({ question, questionId, authorId }: Props) => {
         },
       );
 
+      console.log(response);
+
       // Parse the response as JSON
       // const aiAnswer = await response.json();
 
