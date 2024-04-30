@@ -53,7 +53,7 @@ const QuestionsCard = ({
           </Link>
         </div>
 
-        {/* if signed in add edit delete actions */}
+        {/* if signed in ad edit delete actions */}
         <SignedIn>
           {showActionButtons && (
             <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />
