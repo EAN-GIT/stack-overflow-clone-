@@ -14,7 +14,7 @@ import {
   UpdateUserParams,
 } from "./shared";
 import { revalidatePath } from "next/cache";
-import { FilterQuery, Query, model } from "mongoose";
+import { FilterQuery } from "mongoose";
 import Tag from "@/models/tag.model";
 import Answer from "@/models/answer.model";
 import { Question } from "@/models/question.model";
